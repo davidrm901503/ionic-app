@@ -1,0 +1,100 @@
+<ion-header>
+    <app-header> </app-header>
+</ion-header>
+
+
+<ion-content padding>
+    <ion-label text-center color="azul-claro">Mis busquedas realizadas</ion-label>
+
+    <hr style="background-color: #88868B;">
+    <ion-list>
+        <ion-item *ngFor="let serv of services">
+            <ion-thumbnail item-start>
+                <ion-img width="80" height="80" src="{{baseUrl}}service.png"></ion-img>
+            </ion-thumbnail>
+            <h2 class="serv-title ">{{serv.title}}</h2>
+            <hr style="border-bottom: 1px solid #dedede;">
+            <ion-grid>
+                <ion-row>
+                    <ion-col col-12>
+                        <p>Calificación: 8/10</p>
+                        <p>Distancia: 5 km</p>
+                        <p>Categoria: Hogar</p>
+                        <p>Visualización: 2017-04-24</p>
+                        <div class="text-center fw-600" style="width: 100px;
+                        height: 20px;
+                        background-color: #44AB6C;
+                        font-weight: 600;
+                        font-size: 11px;padding: 2px;">
+                            <p style=" color: white; text-align: center;">Contactado</p>
+                        </div>
+                    </ion-col>
+
+                </ion-row>
+            </ion-grid>
+        </ion-item>
+
+        <!-- contenido estatico -->
+        <ion-item>
+            <ion-thumbnail item-start>
+                <!-- <ion-img src="{{baseUrl}}"></ion-img> -->
+                <img src="assets/imgs/product-9.jpg">
+            </ion-thumbnail>
+            <h2 class="serv-title ">Dummy service</h2>
+
+            <hr style="border-bottom: 1px solid #dedede;">
+
+            <ion-grid>
+                <ion-row>
+                    <ion-col col-12>
+                        <p>Calificación: 6/10</p>
+                        <p>Distancia: 5 km</p>
+                        <p>Categoria: medicina</p>
+                        <p>Visualización: 2017-04-24</p>
+                        <div class="text-center fw-600" style="width:100px;
+                        height: 20px;
+                        background-color: red;
+                        font-weight: 600;
+                        font-size: 11px;padding: 2px;">
+                            <p style=" color: white; text-align: center;">Sin contactar</p>
+                        </div>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+
+
+        </ion-item>
+
+        <ion-item>
+            <ion-thumbnail item-start>
+                <img src="{{baseUrl}}">
+                <!-- <ion-img width="80" height="80" src="{{baseUrl}}service.png"></ion-img> -->
+            </ion-thumbnail>
+            <h2 class="serv-title ">Dummy service</h2>
+
+            <hr style="border-bottom: 1px solid #dedede;">
+
+            <ion-grid>
+                <ion-row>
+                    <ion-col col-12>
+                        <p>Calificación: 6/10</p>
+                        <p>Distancia: 5 km</p>
+                        <p>Categoria: medicina</p>
+                        <p>Visualización: 2017-11-19</p>
+                        <div class="text-center fw-600" style="width: 100px;
+                        height: 20px;
+                        background-color: #44AB6C;
+                        font-weight: 600;
+                        font-size: 11px;padding: 2px;">
+                            <p style=" color: white; text-align: center;">Contactado</p>
+                        </div>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+
+
+        </ion-item>
+
+    </ion-list>
+    <p *ngIf="!haveServices">No ha visto ningun servicio </p>
+</ion-content>
