@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import  {AuthProvider} from  '../../providers/auth/auth';
+import { IonicPage, NavController, LoadingController } from "ionic-angular";
 import  {ServiceProvider} from  '../../providers/service/service.service';
+import { ApiProvider } from "../../providers/api/api";
 
 @IonicPage()
 @Component({
@@ -14,24 +14,23 @@ export class MyservicesPage {
   baseUrl: any;
   email: any;
   token: any;
-  haveServices = false;
   constructor(public navCtrl: NavController,
-    public navParams: NavParams,
-    public auth: AuthProvider,
-    public servProv: ServiceProvider) {
+    public api: ApiProvider,
+    public servProv: ServiceProvider,public load: LoadingController) {
+      let loading = this.load.create({
+        content: "Cargando..."
+      });
+      loading.present();
+      this.baseUrl = api.getbaseUrl() + "resources/image/service/";
 
-      this.email = navParams.get("email");
-      this.token = navParams.get("token");
-      this.baseUrl = auth.getbaseUrl() + "resources/image/categories/viajes.png";
-
-    this.servProv.getMyServices(this.email,this.token).then(
-      (serv) => {
-        this.services = serv['data'];
-        this.haveServices =  this.services.length > 0;
-      }
-    ).catch(
-      (error) => {}
-    );
+      this.servProv.getMyServices().then(
+        (serv) => {
+          this.services = serv['data'];
+          loading.dismiss();
+        }
+      ).catch(
+        (error) => {}
+      );
   }
 
   ionViewDidLoad() {

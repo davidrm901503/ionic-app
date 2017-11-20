@@ -5,15 +5,17 @@
 <ion-content padding>
     <ng-container *ngIf="!connetionDown; else elseTemplate">
         <ion-searchbar id="search" (ionInput)="onInput($event)" (ionClear)="onCancel($event)" (keypress)="goSearch($event.keyCode)" placeholder="         ¿Que buscas?" #search></ion-searchbar>
-
-
         <ng-container *ngIf="busqueda; else topCategories">
             <p *ngIf="noFound">No hay resultados </p>
             <ion-list>
                 <ion-item *ngFor="let serv of services">
                     <ion-thumbnail item-start>
-                        <!-- <ion-img width="80" height="80" src="assets/imgs/product-9.jpg"></ion-img> -->
-                        <img src="assets/imgs/product-9.jpg">
+                        <ng-container *ngIf="serv.icon; else imgTemplate">
+                            <img src="{{baseUrl}}/service/{{serv.icon}}">
+                        </ng-container>
+                        <ng-template #imgTemplate>
+                            <img src="assets/imgs/service_img.png">
+                        </ng-template>
                     </ion-thumbnail>
                     <h2 class="serv-title ">{{serv.title }} </h2>
                     <div class="text-center fw-600" style="width: 35px;
@@ -47,10 +49,6 @@
             </ion-list>
         </ng-container>
 
-
-
-
-
     </ng-container>
 
     <ng-template #elseTemplate>
@@ -64,11 +62,10 @@
         <ion-label text-center color="azul-claro">Principales tendencias</ion-label>
         <ion-list>
             <button *ngFor="let sub of subCategories" class="btn-text-left" text-left color="azul-claro" ion-button block margin-bottom="1" (click)='openServicesPage(sub.id)'>
-              <img src="{{baseUrl + sub.icon}}" alt="" height="36">
+              <img src="{{baseUrl}}subcategories/{{sub.icon}}" alt="" height="36">
               &nbsp;{{sub.title}}
             </button>
         </ion-list>
-
         <button color="azul-oscuro" style="width:90%;margin-left:5%" class="btn-text-left" ion-button block margin-bottom="2" (click)="openCategoriesPage()">
           <ion-icon name="search" style="font-size: 25px;"></ion-icon>
           &nbsp;Buscar por categoria

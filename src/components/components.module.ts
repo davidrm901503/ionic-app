@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { AppHeaderComponent } from './app-header/app-header';
+import { IonRating } from './ion-rating/ion-rating';
 @NgModule({
-	declarations: [AppHeaderComponent],
+	declarations: [AppHeaderComponent,IonRating],
 	imports: [],
-	exports: [AppHeaderComponent]
+	exports: [AppHeaderComponent,IonRating]
 })
 export class ComponentsModule {}

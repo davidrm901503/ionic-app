@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
-import 'rxjs/add/operator/map';
 import {AuthProvider} from  '../auth/auth'
+import {  HttpClient,  HttpHeaders } from "@angular/common/http";
+import { ApiProvider } from "../api/api";
 
 /*
   Generated class for the ServiceProvider provider.
@@ -12,67 +12,117 @@ import {AuthProvider} from  '../auth/auth'
 @Injectable()
 export class ServiceProvider {
 
- private respuesta:any ;
- private services: Object[] ;
 
-  constructor(public http: Http,public auth: AuthProvider) {
-  }
-  getServiceBySubCat(subcategory):Promise<Object[]>{
-    return this.http.get(this.auth.getbaseUrl() + 'api/servicessub/'+subcategory)
-      .toPromise()
-      .then(
-        (response) => {
-          this.respuesta = response;
-          this.services = JSON.parse(this.respuesta._body);
-         return this.services;
-        }
-      ).catch()
-  }
-  getServiceBySearch(search):Promise<Object[]>{
-    return this.http.get(this.auth.getbaseUrl() + 'api/searchService/'+search)
-      .toPromise()
-      .then(
-        (response) => {
-          this.respuesta = response;
-          this.services = JSON.parse(this.respuesta._body);
-         return this.services;
-        }
-      ).catch()
-  }
+  constructor(public http: HttpClient,public auth: AuthProvider,public api: ApiProvider) {
 
-  getServicesFavorites(email,token):Promise<Object[]>{
-    return this.http.get(this.auth.getbaseUrl() + 'api/myfavorites?email='+email+'&token='+token)
-      .toPromise()
-      .then(
-        (response) => {
-          this.respuesta = response;
-          this.services = JSON.parse(this.respuesta._body);
-         return this.services;
-        }
-      ).catch()
+  }
+  getServiceBySubCat(subcategory):any{
+
+    if (this.auth.getUser()){
+      return this.http.get(this.api.getbaseUrl() + 'api/servicessub/'+subcategory,{
+        headers: new HttpHeaders().set('Authorization', this.auth.getUser().token)
+       })
+        .toPromise()
+        .then(
+          (response) => {
+           return response;
+          }
+        ).catch(this.handleError);
+      }
+      else{
+        return this.http.get(this.api.getbaseUrl() + 'api/servicessub/'+subcategory)
+        .toPromise()
+        .then(
+          (response) => {
+           return response;
+          }
+        ).catch(this.handleError);
+      }
   }
 
-  getMyServices(email,token):Promise<Object[]>{
-    return this.http.get(this.auth.getbaseUrl() + 'api/myfavorites?email='+email+'&token='+token)
+
+  getServiceBySearch(search):Promise<Object>{
+    if (this.auth.getUser()){
+    return this.http.get(this.api.getbaseUrl() + 'api/searchService/'+search,{
+      headers: new HttpHeaders().set('Authorization', this.auth.getUser().token)
+     })
       .toPromise()
       .then(
         (response) => {
-          this.respuesta = response;
-          this.services = JSON.parse(this.respuesta._body);
-         return this.services;
+         return response;
         }
-      ).catch()
-  }
-  getServicesVisited(email,token):Promise<Object[]>{
-    return this.http.get(this.auth.getbaseUrl() + 'api/myvisits?email='+email+'&token='+token)
+      ).catch(this.handleError);
+    }
+    else{
+      return this.http.get(this.api.getbaseUrl() + 'api/searchService/'+search)
       .toPromise()
       .then(
         (response) => {
-          this.respuesta = response;
-          this.services = JSON.parse(this.respuesta._body);
-         return this.services;
+         return response;
         }
-      ).catch()
+      ).catch(this.handleError);
+    }
   }
+
+  getServicesFavorites():Promise<Object>{
+    return this.http.get(this.api.getbaseUrl() + 'api/myfavorites',{
+      headers: new HttpHeaders().set('Authorization',this.auth.getUser().token)
+     })
+      .toPromise()
+      .then(
+        (response) => {
+          return response;
+        }
+      ).catch(this.handleError);
+  }
+
+  getMyServices():Promise<Object>{
+    return this.http.get(this.api.getbaseUrl() + 'api/myservices',{
+      headers: new HttpHeaders().set('Authorization', this.auth.getUser().token)
+     })
+      .toPromise()
+      .then(
+        (response) => {
+          return response;
+        }
+      ).catch(this.handleError);
+  }
+  getServicesVisited():Promise<Object>{
+    return this.http.get(this.api.getbaseUrl() + 'api/myvisits',{
+      headers: new HttpHeaders().set('Authorization', this.auth.getUser().token)
+     })
+      .toPromise()
+      .then(
+        (response) => {
+          return response;
+        }
+      ).catch(this.handleError);
+  }
+  getService(id):Promise<Object>{
+    if (this.auth.getUser()){
+      return this.http.get(this.api.getbaseUrl() + 'api/service/'+id,{
+        headers: new HttpHeaders().set('Authorization', this.auth.getUser().token)
+        })
+      .toPromise()
+      .then(
+        (response) => {
+          return response;
+        }
+      ).catch(this.handleError);
+    }
+    else {
+      return this.http.get(this.api.getbaseUrl() + 'api/service/'+id)
+      .toPromise()
+      .then(
+        (response) => {
+          return response;
+        }
+      ).catch(this.handleError);
+    }
+  }
+  private handleError(error: any): Promise<any> {
+    return Promise.reject(error.message || error);
+  }
+
 
 }

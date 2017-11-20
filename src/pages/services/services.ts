@@ -3,6 +3,8 @@ import { IonicPage, NavController, NavParams,LoadingController } from 'ionic-ang
 import  {ServiceProvider} from  '../../providers/service/service.service';
 import  {AuthProvider} from  '../../providers/auth/auth';
 import { ServicePage } from "../service/service";
+import { HttpErrorResponse } from "@angular/common/http";
+import { ApiProvider } from "../../providers/api/api";
 
 /**
  * Generated class for the ServicesPage page.
@@ -17,67 +19,92 @@ import { ServicePage } from "../service/service";
   templateUrl: "services.html"
 })
 export class ServicesPage {
+  catOptions: { title: string };
+  citiestOptions: { title: string };
 
-  filtro: { ciudad: string,categoria:string };
+  cities: any;
+  categories: any;
+
+  city: any;
+  category: any;
+
   private subCatId: any;
   services = [];
   categoryId: any;
-  loading: any;
-
   private baseUrl: any;
-  haveServices = false;
   loggedIn: boolean;
+  option: any;
 
   constructor(
     public navCtrl: NavController,
     public auth: AuthProvider,
+    public api: ApiProvider,
     public navParams: NavParams,
     public servProv: ServiceProvider,
     public load: LoadingController
   ) {
-    this.baseUrl = auth.getbaseUrl() + "resources/image/subcategories/";
+    this.baseUrl = api.getbaseUrl() + "resources/image/service/";
     this.loggedIn = auth.isLoggedIn();
     this.subCatId = navParams.get("subCatId");
-    this.filtro = {ciudad:"",categoria:""};
-    // this.ciudadOptions = {
-    //   title: "Filtar por ciudad"
-    // };
-    // this.catOptions = {
-    //   title: "Filtar por categoria"
-    // };
+    this.citiestOptions = {
+      title: "Ciudades"
+    };
+    this.catOptions = {
+      title: "Categorias"
+    };
+    this.loadSelect();
 
-    this.loading = this.load.create();
-    this.loading.present();
-    this.servicesBySubCat();
   }
-  // cuando cambia un filtro
-  onChange(value) {
-     this.filtro.ciudad = value;
-    // this.services =   this.services.filter(item => {
-    // return (item.title +  ' ' +item.address ).toLowerCase().indexOf(this.ciudad) > -1;
-    // });
+
+  loadSelect(){
+    this.api.getCities().then(
+      data => {
+        this.cities = data["data"];
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+        } else {
+        }
+      }
+    );
+    this.api.getCategories().then(
+      data => {
+        this.categories = data["data"];
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+        } else {
+        }
+      }
+    );
   }
-  onChange2(value) {
-    this.filtro.categoria = value;
-   // this.services =   this.services.filter(item => {
-   // return (item.title +  ' ' +item.address ).toLowerCase().indexOf(this.ciudad) > -1;
-   // });
- }
+
+
 
   // servicios dada una subCat
   servicesBySubCat() {
-    this.servProv
-      .getServiceBySubCat(this.subCatId)
-      .then(serv => {
-        this.services = serv["data"];
-        this.haveServices = this.services.length > 0;
-        this.loading.dismiss();
-      })
-      .catch(error => {});
+    let loading = this.load.create({
+      content: "Cargando..."
+    });
+    loading.present();
+
+    this.servProv.getServiceBySubCat(this.subCatId).then(
+      data => {
+        this.services = data["data"];
+        loading.dismiss();
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          loading.dismiss();
+        } else {
+          loading.dismiss();
+        }
+      }
+    );
   }
 
   ionViewDidLoad() {
-    console.log("ionViewDidLoad ServicesPage");
+    this.servicesBySubCat();
   }
   openServicePage(id) {
     this.navCtrl.push(ServicePage, {
@@ -86,25 +113,23 @@ export class ServicesPage {
   }
 
   doRefresh(refresher) {
-    console.log("Begin async operation", refresher);
-    this.servProv
-      .getServiceBySubCat(this.subCatId)
-      .then(serv => {
-        this.services = serv;
-        console.log("Async operation has ended");
+    this.servProv.getServiceBySubCat(this.subCatId).then(
+      data => {
+        this.services = data["data"];
         refresher.complete();
-      })
-      .catch(error => {});
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+        } else {
+        }
+      }
+    );
   }
 
-  deleteCiudad(chip: Element) {
-    chip.className = "hidden";
-    this.filtro.ciudad = "";
-    //chip.remove();
+  deleteCity() {
+    this.city = null;
   }
-  deleteCat(chip: Element) {
-    chip.className = "hidden";
-    this.filtro.categoria = "";
-    //chip.remove();
+  deleteCategory() {
+    this.category = null;
   }
 }

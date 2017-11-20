@@ -48,31 +48,19 @@ export class PopoverPage implements OnInit {
     this.viewCtrl.dismiss();
   }
   openFavoritesPage(){
-    this.navCtrl.push(FavoritesPage,{
-      token:this.auth.getUser().token,
-      email:this.auth.getUser().email
-    });
+    this.navCtrl.push(FavoritesPage,);
     this.viewCtrl.dismiss();
   }
   openBusquedaPage(){
-    this.navCtrl.push(BusquedaPage,{
-      token:this.auth.getUser().token,
-      email:this.auth.getUser().email
-    });
+    this.navCtrl.push(BusquedaPage);
     this.viewCtrl.dismiss();
   }
   openMyServicesPage(){
-    this.navCtrl.push(MyservicesPage,{
-      token:this.auth.getUser().token,
-      email:this.auth.getUser().email
-    });
+    this.navCtrl.push(MyservicesPage);
     this.viewCtrl.dismiss();
   }
   openCreatePage(){
-    this.navCtrl.push(Create1Page,{
-      token:this.auth.getUser().token,
-      email:this.auth.getUser().email
-    });
+    this.navCtrl.push(Create1Page);
     this.viewCtrl.dismiss();
   }
 }

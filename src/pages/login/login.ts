@@ -1,7 +1,15 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, LoadingController,ToastController } from 'ionic-angular';
+import {
+  IonicPage,
+  ModalController,
+  NavController,
+  LoadingController,
+  ToastController,
+  AlertController
+} from "ionic-angular";
 import {User} from '../../models/user';
 import {AuthProvider} from '../../providers/auth/auth';
+import { ForgotPage } from "../forgot/forgot";
 // import { HomePage } from "../home/home";
 
 @IonicPage()
@@ -12,15 +20,14 @@ import {AuthProvider} from '../../providers/auth/auth';
 export class LoginPage {
   user: User;
   loading: any;
-  error: string;
-
 
   constructor(public navCtrl: NavController,
      public authService: AuthProvider ,
      public toastCtrl: ToastController,
-     public load: LoadingController) {
+     public load: LoadingController,
+     public modalCtrl: ModalController,
+     public alertCtrl: AlertController) {
     this.user = new User();
-    this.error = '';
   }
 
   doLogin() {
@@ -55,10 +62,18 @@ llenarCampos(){
     });
     toast.present();
 }
+openForgot(){
+  const profileModal = this.modalCtrl.create(ForgotPage);
+  profileModal.onDidDismiss(data => {
+    // enviar contraseña
+    console.log(data);
+  });
+
+  profileModal.present();
+}
 
 
-  ionViewDidLoad() {
 
-  }
 
 }
+

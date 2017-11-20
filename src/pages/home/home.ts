@@ -1,6 +1,5 @@
 // componetes angular
-import { Component, OnInit, ViewChild } from "@angular/core";
-import {Http} from '@angular/http';
+import { Component, ViewChild } from "@angular/core";
 // providers
 import  {SubCategoryProvider} from  '../../providers/sub-category/sub-category';
 import  {AuthProvider} from  '../../providers/auth/auth';
@@ -12,17 +11,25 @@ import {ServicesPage} from '../services/services';
 import  {CategoriesPage} from  '../categories/categories';
 import 'rxjs/add/operator/map';
 // componetes ionic
-import {PopoverController,NavController,} from 'ionic-angular';
-import { NavParams, LoadingController, Keyboard } from "ionic-angular";
+import {IonicPage,PopoverController,NavController,} from 'ionic-angular';
+import {
+  NavParams,
+  LoadingController,
+  Keyboard,
+  Platform
+} from "ionic-angular";
 // native components
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { ServicePage } from "../service/service";
+import { HttpErrorResponse } from "@angular/common/http";
+import { ApiProvider } from "../../providers/api/api";
 
+@IonicPage()
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
-export class HomePage  implements OnInit{
+export class HomePage {
   subCategories = [];
   services = [];
   para: any;
@@ -38,54 +45,83 @@ export class HomePage  implements OnInit{
   constructor(
      public auth: AuthProvider,
      private popoverCtrl: PopoverController,
-     public http: Http,
      public subCat: SubCategoryProvider,
      public navCtrl: NavController ,
+     public api: ApiProvider,
      public servProv: ServiceProvider,
      private load: LoadingController,
      public keyboard: Keyboard,
-     navParams: NavParams,splashScreen: SplashScreen) {
-
-     this.busqueda = false;
-     this.noFound = false;
-     this.baseUrl = auth.getbaseUrl() + "resources/image/subcategories/";
-     this.connetionDown =false;
-     this.subCat.topSubcategories()
-      .then(
-        (subCat) => {
-          this.subCategories =subCat['data'];
-          setTimeout(function () {
-            splashScreen.hide();
-          },2);
-        }
-      ).catch(
-        (error) => {
-          this.connetionDown = true;
-        }
-      );
+     navParams: NavParams,public splashScreen: SplashScreen,public platform: Platform) {
+      this.connetionDown = false;
   }
+
+  ionViewDidLoad() {
+    this.platform.ready().then(() => {
+      this.busqueda = false;
+      this.noFound = false;
+      this.baseUrl = this.api.getbaseUrl() + "resources/image/";
+      this.auth.currentUser.subscribe(user=>{
+        this.loggedIn = !!user;
+      });
+       this.subCat.topSubcategories().then(
+        data => {
+          this.subCategories =data['data'];
+          this.splashScreen.hide();
+          this.connetionDown = false;
+        },
+        (err: HttpErrorResponse) => {
+          if (err.error instanceof Error) {
+            this.connetionDown = true;
+            this.splashScreen.hide();
+          } else {
+            this.splashScreen.hide();
+            this.connetionDown = true;
+          }
+        });
+    });
+      }
 
   searchServices(query){
 
     this.loading = this.load.create();
     this.loading.present();
     this.servProv.getServiceBySearch(query).then(
-      (serv) => {
-        this.services = serv['data'];
+      data => {
+        this.services =data['data'];
         this.noFound = this.services.length == 0 ? true : false;
         this.loading.dismiss();
-      }
-    ).catch(
-      (error) => {
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          this.connetionDown = true;
+          this.loading.dismiss();
+        } else {
+          this.loading.dismiss();
+          this.connetionDown = true;
+        }
+      });
+  }
 
-          }
-    );
-  }
-  ngOnInit() {
-    this.auth.currentUser.subscribe(user=>{
-      this.loggedIn = !!user;
-    })
-  }
+  // ngOnInit() {
+  //   this.auth.currentUser.subscribe(user=>{
+  //     this.loggedIn = !!user;
+  //   });
+  //    this.subCat.topSubcategories().then(
+  //     data => {
+  //       this.subCategories =data['data'];
+  //       this.splashScreen.hide();
+  //       this.connetionDown = false;
+  //     },
+  //     (err: HttpErrorResponse) => {
+  //       if (err.error instanceof Error) {
+  //         this.connetionDown = true;
+  //         this.splashScreen.hide();
+  //       } else {
+  //         this.splashScreen.hide();
+  //         this.connetionDown = true;
+  //       }
+  //     });
+  // }
   goSearch(keyCode) {
     if (keyCode === 13){
      this.busqueda = true;
@@ -121,7 +157,8 @@ export class HomePage  implements OnInit{
   presentPopover(ev) {
     let popover = this.popoverCtrl.create(PopoverPage);
     popover.present({
-      ev: ev
+      ev: ev,
+
     });
   }
   openCategoriesPage(){
@@ -133,21 +170,17 @@ export class HomePage  implements OnInit{
     });
   }
   reConnect(){
-
-    this.connetionDown =false;
-
-
     this.subCat.topSubcategories()
     .then(
       (cat) => {
-        this.subCategories = cat;
-
+        this.busqueda = false;
+        this.connetionDown = false;
+        this.subCategories = cat['data'];
       }
     ).catch(
       (error) => {
-
         this.connetionDown = true;
-          }
+      }
     );
   }
 }

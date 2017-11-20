@@ -15,3 +15,8 @@
 .popover-content {
     overflow: hidden;
 }
+
+ion-modal ion-backdrop {
+    visibility: visible !important;
+    z-index: 0;
+}

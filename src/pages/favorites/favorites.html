@@ -5,80 +5,46 @@
 
 <ion-content padding>
     <ion-label text-center color="azul-claro">Mis anuncios favoritos</ion-label>
-
     <hr style="background-color: #88868B;">
     <ion-list>
-        <ion-item *ngFor="let serv of services">
-            <ion-thumbnail item-start>
-                <ion-img width="80" height="80" src="{{baseUrl}}service.png"></ion-img>
-                <!-- <img src="assets/imgs/product-9.jpg"> -->
-            </ion-thumbnail>
-            <h2 class="serv-title ">{{serv.title}}</h2>
-            <hr style="border-bottom: 1px solid #dedede;">
-
-            <ion-grid>
-                <ion-row>
-                    <ion-col col-12>
-                        <p>Calificación: 8/10</p>
-                        <p>Distancia: 5 km</p>
-                        <p>Categoria: Hogar</p>
-                    </ion-col>
-
-                </ion-row>
-            </ion-grid>
-
-
-            <button ion-button color="azul-claro" (click)='openServicePage(serv.id)'><i class="fa fa-check" aria-hidden="true"></i>&nbsp;Ver detalle</button>
-
-        </ion-item>
-
-        <!-- contenido estatico -->
-        <ion-item>
-            <ion-thumbnail item-start>
-                <!-- <ion-img src="{{baseUrl}}"></ion-img> -->
-                <img src="assets/imgs/product-9.jpg">
-            </ion-thumbnail>
-            <h2 class="serv-title ">Dummy service</h2>
-
-            <hr style="border-bottom: 1px solid #dedede;">
-
-            <ion-grid>
-                <ion-row>
-                    <ion-col col-12>
-                        <p>Calificación: 6/10</p>
-                        <p>Distancia: 5 km</p>
-                        <p>Categoria: medicina</p>
-                    </ion-col>
-                </ion-row>
-            </ion-grid>
-
-
-            <button ion-button color="azul-claro" (click)='openServicePage(serv.id)'><i class="fa fa-check" aria-hidden="true"></i>&nbsp;Ver detalle</button>
-        </ion-item>
-
-        <ion-item>
-            <ion-thumbnail item-start>
-                <img src="{{baseUrl}}">
-                <!-- <ion-img width="80" height="80" src="{{baseUrl}}service.png"></ion-img> -->
-            </ion-thumbnail>
-            <h2 class="serv-title ">Dummy service</h2>
-
-            <hr style="border-bottom: 1px solid #dedede;">
-
-            <ion-grid>
-                <ion-row>
-                    <ion-col col-12>
-                        <p>Calificación: 6/10</p>
-                        <p>Distancia: 5 km</p>
-                        <p>Categoria: medicina</p>
-                    </ion-col>
-                </ion-row>
-            </ion-grid>
-
-
-            <button ion-button color="azul-claro" (click)='openServicePage(serv.id)'><i class="fa fa-check" aria-hidden="true"></i>&nbsp;Ver detalle</button>
-        </ion-item>
+        <ion-item-sliding *ngFor="let serv of services">
+            <ion-item>
+                <ion-thumbnail item-start>
+                    <ng-container *ngIf="serv.icon; else imgTemplate">
+                        <img src="{{baseUrl}}/service/{{serv.icon}}">
+                    </ng-container>
+                    <ng-template #imgTemplate>
+                        <img src="assets/imgs/service_img.png">
+                    </ng-template>
+                </ion-thumbnail>
+                <h2 class="serv-title ">{{serv.title}}</h2>
+                <hr style="border-bottom: 1px solid #dedede;">
+                <ion-grid>
+                    <ion-row>
+                        <ion-col col-12>
+                            <p>Calificación: {{serv.rated}}/10</p>
+                            <p>Distancia: 5 km</p>
+                            <p>Categoria: Hogar</p>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+                <button ion-button color="azul-claro" (click)='openServicePage(serv.id)'><i class="fa fa-check" aria-hidden="true"></i>&nbsp;Ver detalle</button>
+            </ion-item>
+            <ion-item-options side="left">
+                <button ion-button color="secondary">
+                <ion-icon name="call"></ion-icon>
+                Call
+              </button>
+            </ion-item-options>
+            <ion-item-options side="right">
+                <button ion-button color="primary">
+                <ion-icon name="mail"></ion-icon>
+                Email
+              </button>
+            </ion-item-options>
+        </ion-item-sliding>
 
     </ion-list>
-    <p *ngIf="!haveServices">No hay servicios </p>
+
+
 </ion-content>

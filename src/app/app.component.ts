@@ -4,14 +4,19 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { HomePage } from '../pages/home/home';
+import { EjemploPage } from "../pages/ejemplo/ejemplo";
 @Component({
-  templateUrl: 'app.html'
+  templateUrl: "app.html"
 })
 export class MyApp {
-  rootPage:any = HomePage;
-
-  splah:any;
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
+  rootPage: any = HomePage;
+  // rootPage: any = EjemploPage;
+  splah: any;
+  constructor(
+    platform: Platform,
+    statusBar: StatusBar,
+    splashScreen: SplashScreen
+  ) {
     // splashScreen.show();
     // this.splah = splashScreen;
     platform.ready().then(() => {
@@ -19,10 +24,8 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       // setTimeout(function(){
-      //   splashScreen.hide();
+        // splashScreen.hide();
       // }, 5000);
-
-
     });
   }
 }

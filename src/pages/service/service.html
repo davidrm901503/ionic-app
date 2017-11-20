@@ -7,20 +7,24 @@
             <ion-col col-9>
                 <ion-list>
                     <ion-item style="padding-left: 0;">
-                        <ion-thumbnail item-start style="margin: 8px 5px 8px 0;">
-                            <img src="assets/imgs/product-9.jpg">
+                        <ion-thumbnail item-start>
+                            <ng-container *ngIf="service.icon; else imgTemplate">
+                                <img src="{{baseUrl}}/service/{{service.icon}}">
+                            </ng-container>
+                            <ng-template #imgTemplate>
+                                <img src="assets/imgs/service_img.png">
+                            </ng-template>
                         </ion-thumbnail>
-                        <h1>Service 1</h1>
-                        <p>subtitule</p>
-
+                        <h1>{{service.title}}</h1>
+                        <p>{{service.subtitle}}</p>
                     </ion-item>
-                    <p>Presno #66 % Camilo cienfuegos y coyula, Regla ,La Habana</p>
+                    <p>{{service.address}}</p>
                     <p>1.5km de tu posición</p>
                 </ion-list>
             </ion-col>
             <ion-col col-3>
-                <strong><ion-label text-center style="font-size: 28px; margin: 13px 0;" color="azul-claro">9/10</ion-label></strong>
-                <button style="font-size: 10px;" color="azul-claro" ion-button>
+                <strong><ion-label text-center style="font-size: 28px; margin: 13px 0;" color="azul-claro">{{service.rated}}/10</ion-label></strong>
+                <button (click)="openRate()" style="font-size: 10px;" color="azul-claro" ion-button>
                 Evaluar
                 </button>
                 <hr style="border-bottom: 2px solid #dedede;">
@@ -29,12 +33,12 @@
                     <i class="fa fa-comment-o" aria-hidden="true"></i> 9999
                   </ion-label>
                 </strong>
-
             </ion-col>
+
         </ion-row>
     </ion-grid>
 
-    <button (click)="Llamar(52187741)" class="btn-text-left" text-left color="azul-claro" ion-button block margin-bottom="1">
+    <button (click)="Llamar(service.phone)" class="btn-text-left" text-left color="azul-claro" ion-button block margin-bottom="1">
         <ion-icon name="call" style="font-size: 30px;"></ion-icon>
         &nbsp;Llamar ahora
       </button>
@@ -46,19 +50,19 @@
     <ion-grid>
         <ion-row>
             <ion-col col-6>
-                <img height="85%" width="85%" src="http://192.168.137.1/login/resources/image/categories/bares.png" />
+                <img (click)="openInfo()" height="85%" width="85%" src="assets/imgs/informacion.png" />
             </ion-col>
 
             <ion-col col-6>
-                <img height="85%" width="85%" src="http://192.168.137.1/login/resources/image/categories/bares.png" />
+                <img (click)="openMapa()" height="85%" width="85%" src="assets/imgs/mapa.png" />
             </ion-col>
 
             <ion-col col-6>
-                <img height="85%" width="85%" src="http://192.168.137.1/login/resources/image/categories/bares.png" />
+                <img height="85%" width="85%" src="assets/imgs/imagenes.png" />
             </ion-col>
 
             <ion-col col-6>
-                <img height="85%" width="85%" src="http://192.168.137.1/login/resources/image/categories/bares.png" />
+                <img height="85%" width="85%" src="assets/imgs/comentarios.png" />
             </ion-col>
         </ion-row>
     </ion-grid>

@@ -1,15 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage,NavParams,ModalController,NavController} from "ionic-angular";
 import { CallNumber } from '@ionic-native/call-number';
-
-// import  {ServiceProvider} from  '../../providers/service/service.service';
-
-/**
- * Generated class for the ServicePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import  {ServiceProvider} from  '../../providers/service/service.service';
+import { ApiProvider } from "../../providers/api/api";
+import { RatePage } from "../rate/rate";
+import { InfoPage } from "../info/info";
+import { MapaPage } from "../mapa/mapa";
 
 @IonicPage()
 @Component({
@@ -17,16 +13,50 @@ import { CallNumber } from '@ionic-native/call-number';
   templateUrl: 'service.html',
 })
 export class ServicePage {
-  service: any;
-  constructor(public navCtrl: NavController, public navParams: NavParams,private callNumber: CallNumber) {
+  private service: any = {};
+  private baseUrl: any;
+
+  constructor(public navParams: NavParams,
+    private callNumber: CallNumber,
+    public servPro: ServiceProvider,
+    public api: ApiProvider,
+    public modalCtrl: ModalController,
+    public navCtrl: NavController
+   ) {
+      this.baseUrl = this.api.getbaseUrl() + "resources/image";
+      this.servPro.getService(this.navParams.get("serviceId")).then(data=> {
+        this.service = data['data'];
+      });
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ServicePage');
+
   }
+  openRate(){
+    const profileModal = this.modalCtrl.create(RatePage);
+    profileModal.onDidDismiss(data => {
+      // enviar rate
+      console.log(data);
+    });
+
+    profileModal.present();
+  }
+
   Llamar(number){
     this.callNumber.callNumber(number, true)
     .then(() => console.log('Launched dialer!'))
     .catch(() => console.log('Error launching dialer'));
+  }
+  openInfo(){
+      this.navCtrl.push(InfoPage,{
+        service:this.service,
+        baseUrl:this.baseUrl
+      });
+  }
+  openMapa(){
+      this.navCtrl.push(MapaPage,{
+        service:this.service,
+        baseUrl:this.baseUrl
+      });
   }
 }

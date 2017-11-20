@@ -1,15 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import  {AuthProvider} from  '../../providers/auth/auth';
+import { IonicPage, NavController, LoadingController } from "ionic-angular";
 import  {ServiceProvider} from  '../../providers/service/service.service';
-
-
-/**
- * Generated class for the BusquedaPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { HttpErrorResponse } from "@angular/common/http";
+import { ApiProvider } from "../../providers/api/api";
 
 @IonicPage()
 @Component({
@@ -24,24 +17,30 @@ export class BusquedaPage {
   haveServices = false;
 
   constructor(public navCtrl: NavController,
-    public navParams: NavParams,
-    public auth: AuthProvider,
-    public servProv: ServiceProvider) {
-      this.email = navParams.get("email");
-      this.token = navParams.get("token");
-      this.baseUrl = auth.getbaseUrl() + "resources/image/categories/viajes.png";
 
-    this.servProv.getServicesVisited(this.email,this.token).then(
-      (serv) => {
-        this.services = serv['data'];
-        this.haveServices =  this.services.length > 0;
-      }
-    ).catch(
-      (error) => {}
-    );
+    public api: ApiProvider,
+    public servProv: ServiceProvider,public load: LoadingController) {
+
+      this.baseUrl = api.getbaseUrl() + "resources/image/service/";
+
+
   }
 
   ionViewDidLoad() {
+    let loading = this.load.create({
+      content: "Cargando..."
+    });
+    loading.present();
+    this.servProv.getServicesVisited().then(
+      data => {
+        this.services = data['data'];
+        loading.dismiss();
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+        } else {
+        }
+      });
   }
 
 }

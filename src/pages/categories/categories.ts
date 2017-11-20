@@ -8,7 +8,8 @@ import {SubcategoriesPage} from '../subcategories/subcategories';
 
 // providers
 import  {CategoryProvider} from  '../../providers/category/category.service';
-import  {AuthProvider} from  '../../providers/auth/auth';
+import { ApiProvider } from "../../providers/api/api";
+
 
 
 /**
@@ -32,9 +33,9 @@ export class CategoriesPage {
     public category: CategoryProvider,
     public load: LoadingController,
     public popCtrl: PopoverController,
-    public auth: AuthProvider) {
+    public api: ApiProvider) {
 
-    this.baseUrl = auth.getbaseUrl();
+    this.baseUrl = api.getbaseUrl();
     const loading = this.load.create();
     loading.present();
     category.getcategories()

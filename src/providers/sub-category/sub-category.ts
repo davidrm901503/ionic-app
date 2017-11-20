@@ -1,44 +1,35 @@
 import {Injectable} from '@angular/core';
-import {Http} from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 import {AuthProvider} from  '../auth/auth';
+import { HttpClient } from "@angular/common/http";
+import { ApiProvider } from "../api/api";
 
 
 @Injectable()
 export class SubCategoryProvider {
 
-  private respuesta:any ;
-  private subcategories: Object[] ;
-  constructor(public http: Http,public auth: AuthProvider) {  }
+  constructor(public http: HttpClient,public auth: AuthProvider,public api: ApiProvider) {  }
 
-  topSubcategories():Promise<Object[]>{
-    return this.http.get(this.auth.getbaseUrl()+'api/topSubcategories')
-      .toPromise()
+  topSubcategories():Promise<any>{
+      return this.http.get(this.api.getbaseUrl()+'api/topSubcategories').toPromise()
       .then(
         (response) => {
-           this.respuesta = response;
-           this.subcategories = JSON.parse(this.respuesta._body);
-          return this.subcategories;
+         return response;
         }
-
-      ).catch(this.handleError)
+      ).catch(this.handleError);
   }
   getsubcategories(category):Promise<Object[]>{
-    return this.http.get(this.auth.getbaseUrl()+ 'api/subcategories/'+category)
+    return this.http.get(this.api.getbaseUrl()+ 'api/subcategories/'+category)
       .toPromise()
       .then(
         (response) => {
-          this.respuesta = response;
-          this.subcategories = JSON.parse(this.respuesta._body);
-         return this.subcategories;
+         return response;
         }
-
       ).catch(this.handleError)
   }
 
   private handleError(error: any): Promise<any> {
-    console.error('An error occurred', error);
     return Promise.reject(error.message || error);
   }
 
