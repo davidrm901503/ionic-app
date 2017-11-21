@@ -15,7 +15,7 @@
                     <ion-item style="padding-left: 0;">
                         <ion-thumbnail item-start>
                             <ng-container *ngIf="service.icon; else imgTemplate">
-                                <img src="{{baseUrl}}/service/{{service.icon}}">
+                                <img src="{{baseUrl + service.icon}}">
                             </ng-container>
                             <ng-template #imgTemplate>
                                 <img src="assets/imgs/service_img.png">
@@ -30,7 +30,7 @@
             </ion-col>
             <ion-col col-3>
                 <strong><ion-label text-center style="font-size: 28px; margin: 13px 0;" color="azul-claro">{{service.rated}}/10</ion-label></strong>
-                <button (click)="openRate()" style="font-size: 10px;" color="azul-claro" ion-button>
+                <button *ngIf=loggedIn (click)="openRate()" style="font-size: 10px;" color="azul-claro" ion-button>
               Evaluar
               </button>
                 <hr style="border-bottom: 2px solid #dedede;">

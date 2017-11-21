@@ -1,4 +1,5 @@
 // componetes angular
+
 import { Component, ViewChild } from "@angular/core";
 // providers
 import  {SubCategoryProvider} from  '../../providers/sub-category/sub-category';
@@ -39,10 +40,12 @@ export class HomePage {
   baseUrl: any;
   busqueda:boolean;
   loading: any;
+
   @ViewChild('search') search;
 
 
   constructor(
+
      public auth: AuthProvider,
      private popoverCtrl: PopoverController,
      public subCat: SubCategoryProvider,
@@ -57,9 +60,12 @@ export class HomePage {
 
   ionViewDidLoad() {
     this.platform.ready().then(() => {
+      this.platform.registerBackButtonAction((readySource) => {
+       this.platform.exitApp();
+      });
       this.busqueda = false;
       this.noFound = false;
-      this.baseUrl = this.api.getbaseUrl() + "resources/image/";
+      this.baseUrl = this.api.getbaseUrl();
       this.auth.currentUser.subscribe(user=>{
         this.loggedIn = !!user;
       });
@@ -102,26 +108,6 @@ export class HomePage {
       });
   }
 
-  // ngOnInit() {
-  //   this.auth.currentUser.subscribe(user=>{
-  //     this.loggedIn = !!user;
-  //   });
-  //    this.subCat.topSubcategories().then(
-  //     data => {
-  //       this.subCategories =data['data'];
-  //       this.splashScreen.hide();
-  //       this.connetionDown = false;
-  //     },
-  //     (err: HttpErrorResponse) => {
-  //       if (err.error instanceof Error) {
-  //         this.connetionDown = true;
-  //         this.splashScreen.hide();
-  //       } else {
-  //         this.splashScreen.hide();
-  //         this.connetionDown = true;
-  //       }
-  //     });
-  // }
   goSearch(keyCode) {
     if (keyCode === 13){
      this.busqueda = true;
@@ -137,7 +123,8 @@ export class HomePage {
   }
   openServicePage(id){
     this.navCtrl.push(ServicePage,{
-      serviceId:id
+      // serviceId:id
+      serviceId:this.services[id]
     })
   }
 

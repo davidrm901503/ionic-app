@@ -120,6 +120,44 @@ export class ServiceProvider {
       ).catch(this.handleError);
     }
   }
+  markfavorite(id):Promise<Object>{
+      return this.http.get(this.api.getbaseUrl() + 'api/markfavorite/'+id,{
+        headers: new HttpHeaders().set('Authorization', this.auth.getUser().token)
+        })
+      .toPromise()
+      .then(
+        (response) => {
+          return response;
+        }
+      ).catch(this.handleError);
+
+  }
+  diskMarkfavorite(id):Promise<Object>{
+    return this.http.get(this.api.getbaseUrl() + 'api/dismarkfavorite/'+id,{
+      headers: new HttpHeaders().set('Authorization', this.auth.getUser().token)
+      })
+    .toPromise()
+    .then(
+      (response) => {
+        return response;
+      }
+    ).catch(this.handleError);
+
+}
+rateservice(id,value):Promise<Object>{
+  return this.http.get(this.api.getbaseUrl() + 'api/rateservice/'+id+'/'+value,{
+    headers: new HttpHeaders().set('Authorization', this.auth.getUser().token)
+    })
+  .toPromise()
+  .then(
+    (response) => {
+      return response;
+    }
+  ).catch(this.handleError);
+
+}
+
+
   private handleError(error: any): Promise<any> {
     return Promise.reject(error.message || error);
   }

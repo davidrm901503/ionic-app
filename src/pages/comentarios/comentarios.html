@@ -1,6 +1,12 @@
 <ion-header>
-    <app-header> </app-header>
+
+    <ion-navbar>
+        <ion-title>Comentarios</ion-title>
+    </ion-navbar>
+
 </ion-header>
+
+
 <ion-content padding>
     <ion-grid>
         <ion-row>
@@ -44,26 +50,30 @@
       </button>
 
     <ion-label text-center color="azul-claro">
-        Descripción General
+        Escribe tu comentario
     </ion-label>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel maiores eligendi, quibusdam nisi labore amet exercitationem accusantium inventore accusamus quas velit nulla ipsa voluptatibus voluptatum possimus assumenda vitae adipisci. Accusamus?</p>
-    <ion-grid>
-        <ion-row>
-            <ion-col col-6 tappable (click)="openInfo()">
-                <img height="85%" width="85%" src="assets/imgs/informacion.png" />
-            </ion-col>
+    <ion-textarea rows="3" placeholder="Escribe tu comentario"></ion-textarea>
+    <button class="btn-text-left" text-left color="azul-claro" ion-button block margin-bottom="1">
+        <ion-icon name="call" style="font-size: 30px;"></ion-icon>
+        &nbsp;Comentar
+      </button>
+    <ion-label text-center color="azul-claro">
+        Comentarios anterioles
+    </ion-label>
 
-            <ion-col col-6 tappable (click)="openMapa()">
-                <img height="85%" width="85%" src="assets/imgs/mapa.png" />
-            </ion-col>
+    <div style="border-bottom: 1px solid  #88868B">
+        <p style="float: left;">User 1</p>
+        <p style="float: right">2014-05-12</p>
+        <div style="clear: both;"></div>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta similique id saepe, laudantium dolor molestias maxime a assumenda ipsam autem exercitationem deleniti possimus quaerat modi blanditiis esse expedita sint quo?</p>
+    </div>
+    <div style="border-bottom: 1px solid  #88868B">
+        <p style="float: left;">User 2</p>
+        <p style="float: right">2014-05-12</p>
+        <div style="clear: both;"></div>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta similique id saepe, laudantium dolor molestias maxime a assumenda ipsam autem exercitationem deleniti possimus quaerat modi blanditiis esse expedita sint quo?</p>
+    </div>
 
-            <ion-col col-6 tappable (click)="openGaleria()">
-                <img height="85%" width="85%" src="assets/imgs/imagenes.png" />
-            </ion-col>
 
-            <ion-col col-6 tappabl (click)="openComentarios()">
-                <img height="85%" width="85%" src="assets/imgs/comentarios.png" />
-            </ion-col>
-        </ion-row>
-    </ion-grid>
+
 </ion-content>

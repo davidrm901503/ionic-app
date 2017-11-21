@@ -11,7 +11,7 @@
             <ion-item>
                 <ion-thumbnail item-start>
                     <ng-container *ngIf="serv.icon; else imgTemplate">
-                        <img src="{{baseUrl}}/service/{{serv.icon}}">
+                        <img src="{{baseUrl + serv.icon}}">
                     </ng-container>
                     <ng-template #imgTemplate>
                         <img src="assets/imgs/service_img.png">
@@ -30,16 +30,9 @@
                 </ion-grid>
                 <button ion-button color="azul-claro" (click)='openServicePage(serv.id)'><i class="fa fa-check" aria-hidden="true"></i>&nbsp;Ver detalle</button>
             </ion-item>
-            <ion-item-options side="left">
-                <button ion-button color="secondary">
-                <ion-icon name="call"></ion-icon>
-                Call
-              </button>
-            </ion-item-options>
             <ion-item-options side="right">
-                <button ion-button color="primary">
-                <ion-icon name="mail"></ion-icon>
-                Email
+                <button (click)="delete(serv.id)" ion-button color="danger" style="font-size: 30px;">
+                <ion-icon name="trash"></ion-icon>
               </button>
             </ion-item-options>
         </ion-item-sliding>

@@ -31,7 +31,7 @@ export class FavoritesPage {
      public servProv: ServiceProvider,
      public load: LoadingController) {
 
-      this.baseUrl = this.api.getbaseUrl() + "resources/image/";
+      this.baseUrl = this.api.getbaseUrl();
 
   }
 
@@ -49,5 +49,15 @@ export class FavoritesPage {
     this.navCtrl.push(ServicePage, {
       serviceId: id
     });
+  }
+  delete(id){
+    //hacer el
+    this.servProv.diskMarkfavorite(id).then(
+      data => {
+        this.services = this.services.filter(function(item){
+          return item.id !== id;
+        });
+      } );
+
   }
 }

@@ -1,6 +1,12 @@
 <ion-header>
-    <app-header> </app-header>
+
+    <ion-navbar>
+        <ion-title>Galeria</ion-title>
+    </ion-navbar>
+
 </ion-header>
+
+
 <ion-content padding>
     <ion-grid>
         <ion-row>
@@ -44,26 +50,22 @@
       </button>
 
     <ion-label text-center color="azul-claro">
-        Descripción General
+        Galeria de imagenes
     </ion-label>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel maiores eligendi, quibusdam nisi labore amet exercitationem accusantium inventore accusamus quas velit nulla ipsa voluptatibus voluptatum possimus assumenda vitae adipisci. Accusamus?</p>
     <ion-grid>
         <ion-row>
-            <ion-col col-6 tappable (click)="openInfo()">
-                <img height="85%" width="85%" src="assets/imgs/informacion.png" />
+            <ion-col col-4>
+                <img src="assets/imgs/service_img.png">
             </ion-col>
 
-            <ion-col col-6 tappable (click)="openMapa()">
-                <img height="85%" width="85%" src="assets/imgs/mapa.png" />
+            <ion-col col-4>
+                <img src="assets/imgs/service_img.png">
             </ion-col>
 
-            <ion-col col-6 tappable (click)="openGaleria()">
-                <img height="85%" width="85%" src="assets/imgs/imagenes.png" />
+            <ion-col col-4>
+                <img src="assets/imgs/service_img.png">
             </ion-col>
 
-            <ion-col col-6 tappabl (click)="openComentarios()">
-                <img height="85%" width="85%" src="assets/imgs/comentarios.png" />
-            </ion-col>
         </ion-row>
     </ion-grid>
 </ion-content>

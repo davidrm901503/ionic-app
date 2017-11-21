@@ -6,13 +6,6 @@ import { ServicePage } from "../service/service";
 import { HttpErrorResponse } from "@angular/common/http";
 import { ApiProvider } from "../../providers/api/api";
 
-/**
- * Generated class for the ServicesPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @IonicPage()
 @Component({
   selector: "page-services",
@@ -43,7 +36,7 @@ export class ServicesPage {
     public servProv: ServiceProvider,
     public load: LoadingController
   ) {
-    this.baseUrl = api.getbaseUrl() + "resources/image/service/";
+    this.baseUrl = api.getbaseUrl();
     this.loggedIn = auth.isLoggedIn();
     this.subCatId = navParams.get("subCatId");
     this.citiestOptions = {
@@ -53,6 +46,22 @@ export class ServicesPage {
       title: "Categorias"
     };
     this.loadSelect();
+
+  }
+
+  toogleFavorite(index,id){
+    if(this.services[index].favorite == 1){
+      this.servProv.diskMarkfavorite(id).then(
+        data => {
+          this.services[index].visits = 0;
+        } );
+    }
+    else{
+      this.servProv.markfavorite(id).then(
+        data => {
+          this.services[index].visits = 1;
+        });
+    }
 
   }
 
@@ -108,7 +117,8 @@ export class ServicesPage {
   }
   openServicePage(id) {
     this.navCtrl.push(ServicePage, {
-      serviceId: id
+      serviceId: this.services[id]  //si paso el index
+      // serviceId: id  //si paso el id del servicio
     });
   }
 

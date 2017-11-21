@@ -29,6 +29,7 @@ export class RatePage {
     console.log('ionViewDidLoad RatePage');
   }
   close(){
+    let data = { 'rate': "cancel" };
     this.viewCtrl.dismiss();
 }
 
