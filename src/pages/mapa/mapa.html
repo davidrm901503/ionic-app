@@ -29,7 +29,7 @@
                 </ion-list>
             </ion-col>
             <ion-col col-3>
-                <strong><ion-label text-center style="font-size: 28px; margin: 13px 0;" color="azul-claro">{{service.rated}}/10</ion-label></strong>
+                <strong><ion-label text-center style="font-size: 28px; margin: 13px 0;" color="azul-claro">{{service.globalrate}}/10</ion-label></strong>
                 <button *ngIf=loggedIn (click)="openRate()" style="font-size: 10px;" color="azul-claro" ion-button>
                   Evaluar
                   </button>
@@ -53,7 +53,7 @@
         Mis ubicaciones
     </ion-label>
     <div #map id="map"></div>
-    <button ion-button full (click)="getLocation()">Get the Location</button>
+    <button ion-button full (click)="getLocation()">Obtener posición</button>
 
 
 </ion-content>

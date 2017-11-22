@@ -53,13 +53,13 @@ export class ServicesPage {
     if(this.services[index].favorite == 1){
       this.servProv.diskMarkfavorite(id).then(
         data => {
-          this.services[index].visits = 0;
+          this.services[index].favorite = 0;
         } );
     }
     else{
       this.servProv.markfavorite(id).then(
         data => {
-          this.services[index].visits = 1;
+          this.services[index].favorite = 1;
         });
     }
 
@@ -117,8 +117,8 @@ export class ServicesPage {
   }
   openServicePage(id) {
     this.navCtrl.push(ServicePage, {
-      serviceId: this.services[id]  //si paso el index
-      // serviceId: id  //si paso el id del servicio
+      // serviceId: this.services[id]  //si paso el index
+      serviceId: id  //si paso el id del servicio
     });
   }
 

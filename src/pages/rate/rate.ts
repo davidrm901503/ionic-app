@@ -20,7 +20,7 @@ import {
   templateUrl: 'rate.html',
 })
 export class RatePage {
-  value: number = 0;
+  value: number = 1;
 
   constructor(public navCtrl: NavController, public viewCtrl: ViewController,public navParams: NavParams) {
   }
@@ -30,17 +30,17 @@ export class RatePage {
   }
   close(){
     let data = { 'rate': "cancel" };
-    this.viewCtrl.dismiss();
-}
+    this.viewCtrl.dismiss(data);
+  }
 
- starClicked(value){
-   this.value = value;
+  starClicked(value){
+    this.value = value;
 
-}
-sendRate(){
-  let data = { 'rate': this.value };
-   this.viewCtrl.dismiss(data);
-}
+  }
+  sendRate(){
+    let data = { 'rate': this.value };
+    this.viewCtrl.dismiss(data);
+  }
 
 
 }

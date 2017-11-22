@@ -83,20 +83,20 @@
             <ion-grid>
                 <ion-row>
                     <ion-col col-6>
-                        <p>Calificación: {{serv.rated}}/10</p>
+                        <p>Calificación: {{serv.globalrate}}/10</p>
                         <p>Distancia: 5 km</p>
                         <p>Categoria: Hogar</p>
                     </ion-col>
 
                     <ion-col col-6 text-right>
-                        <ion-icon tappable (click)="toogleFavorite(i,serv.id)" *ngIf=loggedIn name="heart" [color]="serv.favorite ? 'favorite_on' : 'favorite_off'" color="favorite_on" style="font-size: 40px;"></ion-icon>
+                        <ion-icon (click)="toogleFavorite(i,serv.id)" *ngIf=loggedIn name="heart" [color]="serv.favorite ? 'favorite_on' : 'favorite_off'" color="favorite_on" style="font-size: 40px;"></ion-icon>
                     </ion-col>
                 </ion-row>
             </ion-grid>
 
 
-            <button ion-button color="azul-claro" (click)='openServicePage(i)'><i class="fa fa-check" aria-hidden="true"></i>&nbsp;Visualizar</button>
-            <!-- <button ion-button color="azul-claro" (click)='openServicePage(serv.id)'><i class="fa fa-check" aria-hidden="true"></i>&nbsp;Visualizar</button> -->
+            <!-- <button ion-button color="azul-claro" (click)='openServicePage(i)'><i class="fa fa-check" aria-hidden="true"></i>&nbsp;Visualizar</button> -->
+            <button ion-button color="azul-claro" (click)='openServicePage(serv.id)'><i class="fa fa-check" aria-hidden="true"></i>&nbsp;Visualizar</button>
             <button ion-button color="danger"><i class="fa fa-bullhorn" aria-hidden="true"></i>&nbsp;Denunciar</button>
         </ion-item>
     </ion-list>

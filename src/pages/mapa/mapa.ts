@@ -107,7 +107,7 @@ export class MapaPage {
          position: this.latLng
        });
 
-       let content = "<h4>Current Location</h4>";
+       let content = "<h4>Mi posición</h4>";
 
        this.addInfoWindow(marker, content);
 
@@ -117,19 +117,18 @@ export class MapaPage {
       console.log('Error getting location', error);
     });
 
-
   }
 
   addInfoWindow(marker, content){
 
-  let infoWindow = new google.maps.InfoWindow({
-    content: content
-  });
+    let infoWindow = new google.maps.InfoWindow({
+      content: content
+    });
 
-  google.maps.event.addListener(marker, 'click', () => {
-    infoWindow.open(this.map, marker);
-  });
+    google.maps.event.addListener(marker, 'click', () => {
+      infoWindow.open(this.map, marker);
+    });
 
-}
+  }
 
 }

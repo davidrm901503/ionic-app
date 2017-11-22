@@ -25,7 +25,9 @@ import { ServicePage } from "../service/service";
 import { HttpErrorResponse } from "@angular/common/http";
 import { ApiProvider } from "../../providers/api/api";
 
-@IonicPage()
+@IonicPage({
+  priority: 'high'
+})
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -123,8 +125,8 @@ export class HomePage {
   }
   openServicePage(id){
     this.navCtrl.push(ServicePage,{
-      // serviceId:id
-      serviceId:this.services[id]
+       serviceId:id
+      // serviceId:this.services[id]
     })
   }
 

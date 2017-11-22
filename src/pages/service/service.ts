@@ -30,11 +30,11 @@ export class ServicePage {
       this.loggedIn = auth.isLoggedIn();
       this.baseUrl = this.api.getbaseUrl();
       // si recibo el id del servicio
-      // this.servPro.getService(this.navParams.get("serviceId")).then(data=> {
-      //   this.service = data['data'];
-      // });
+      this.servPro.getService(this.navParams.get("serviceId")).then(data=> {
+        this.service = data['data'];
+      });
       // si recibo el servicio por params
-      this.service = this.navParams.get("serviceId");
+    //  this.service = this.navParams.get("serviceId");
   }
 
   ionViewDidLoad() {
@@ -43,7 +43,7 @@ export class ServicePage {
   openRate(){
     const profileModal = this.modalCtrl.create(RatePage);
     profileModal.onDidDismiss(data => {
-      if(data.rate != "cancel")
+      if(data.rate !== "cancel")
       this.servPro.rateservice(this.service.id,data.rate).then(
         data => {
           console.log(data);
