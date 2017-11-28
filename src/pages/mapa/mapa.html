@@ -52,8 +52,32 @@
     <ion-label text-center color="azul-claro">
         Mis ubicaciones
     </ion-label>
-    <div #map id="map"></div>
-    <button ion-button full (click)="getLocation()">Obtener posición</button>
+    <!-- <div #map id="map"></div> -->
+
+    <ion-card>
+
+
+        <ion-item>
+            <div #map id="map"></div>
+            <ion-fab left bottom>
+                <button ion-fab (click)="getLocation()">
+              <ion-icon name="pin"></ion-icon>
+            </button>
+            </ion-fab>
+        </ion-item>
+
+        <ion-item *ngFor="let p of positions; let i = index">
+            <h2>{{p.title}}</h2>
+            <button (click)="calculateAndDisplayRoute(p)" ion-button icon-left clear item-end>
+            <ion-icon name="navigate"></ion-icon>
+            Ir
+          </button>
+        </ion-item>
+
+    </ion-card>
+
+
+    <!-- <button ion-button full (click)="getLocation()">Obtener posición</button> -->
 
 
 </ion-content>

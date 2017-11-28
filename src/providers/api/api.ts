@@ -11,8 +11,8 @@ import {  HttpClient,  HttpHeaders } from "@angular/common/http";
 @Injectable()
 export class ApiProvider {
 
-  private apiBaseUrl = 'http://192.168.137.1/login/';
-  // private apiBaseUrl = 'http://localhost/login/';
+  // private apiBaseUrl = 'http://192.168.137.1/login/';
+  private apiBaseUrl = 'http://localhost/login/';
   private days : object = {
     0:"Domingo",
     1:"Lunes",

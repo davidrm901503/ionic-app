@@ -16,10 +16,10 @@ export class ServiceProvider {
   constructor(public http: HttpClient,public auth: AuthProvider,public api: ApiProvider) {
 
   }
-  getServiceBySubCat(subcategory):any{
+   getServiceBySubCat(subcategory):any{
 
     if (this.auth.getUser()){
-      return this.http.get(this.api.getbaseUrl() + 'api/servicessub/'+subcategory,{
+            return this.http.get(this.api.getbaseUrl() + 'api/servicessub/'+subcategory,{
         headers: new HttpHeaders().set('Authorization', this.auth.getUser().token)
        })
         .toPromise()

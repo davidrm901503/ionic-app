@@ -21,10 +21,10 @@ export class ServicesPage {
   city: any;
   category: any;
 
-  private subCatId: any;
-  services = [];
+  subCatId: any;
+  services :any;
   categoryId: any;
-  private baseUrl: any;
+  baseUrl: any;
   loggedIn: boolean;
   option: any;
 
@@ -39,6 +39,8 @@ export class ServicesPage {
     this.baseUrl = api.getbaseUrl();
     this.loggedIn = auth.isLoggedIn();
     this.subCatId = navParams.get("subCatId");
+    this.servicesBySubCat(navParams.get("subCatId"));
+    //this.servicesBySubCat(navParams.get("subCatId"));
     this.citiestOptions = {
       title: "Ciudades"
     };
@@ -91,29 +93,29 @@ export class ServicesPage {
 
 
   // servicios dada una subCat
-  servicesBySubCat() {
+  servicesBySubCat(id) {
     let loading = this.load.create({
       content: "Cargando..."
     });
     loading.present();
-
-    this.servProv.getServiceBySubCat(this.subCatId).then(
+    this.servProv.getServiceBySubCat(id).then(
       data => {
         this.services = data["data"];
         loading.dismiss();
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
-          loading.dismiss();
+
+          // loading.dismiss();
         } else {
-          loading.dismiss();
+          console.log(err);
+          // loading.dismiss();
         }
       }
     );
   }
 
   ionViewDidLoad() {
-    this.servicesBySubCat();
   }
   openServicePage(id) {
     this.navCtrl.push(ServicePage, {

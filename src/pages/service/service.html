@@ -8,12 +8,12 @@
                 <ion-list>
                     <ion-item style="padding-left: 0;">
                         <ion-thumbnail item-start>
-                            <ng-container *ngIf="service.icon; else imgTemplate">
-                                <img src="{{baseUrl + service.icon}}">
-                            </ng-container>
-                            <ng-template #imgTemplate>
-                                <img src="assets/imgs/service_img.png">
-                            </ng-template>
+                            <!-- <ng-container *ngIf="service.icon; else imgTemplate"> -->
+                            <img [src]="service.icon ? baseUrl + service.icon : 'assets/imgs/service_img.png' ">
+                            <!-- </ng-container> -->
+                            <!-- <ng-template #imgTemplate> -->
+                            <!-- <img src="assets/imgs/service_img.png"> -->
+                            <!-- </ng-template> -->
                         </ion-thumbnail>
                         <h1>{{service.title}}</h1>
                         <p>{{service.subtitle}}</p>

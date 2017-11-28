@@ -16,6 +16,7 @@ import { ComentariosPage } from "../comentarios/comentarios";
   templateUrl: 'service.html',
 })
 export class ServicePage {
+  response: Object;
   private service: any = {};
   private baseUrl: any;
   loggedIn: boolean;
@@ -31,6 +32,7 @@ export class ServicePage {
       this.baseUrl = this.api.getbaseUrl();
       // si recibo el id del servicio
       this.servPro.getService(this.navParams.get("serviceId")).then(data=> {
+        this.response = data;
         this.service = data['data'];
       });
       // si recibo el servicio por params
@@ -67,7 +69,7 @@ export class ServicePage {
   }
   openMapa(){
       this.navCtrl.push(MapaPage,{
-        service:this.service,
+        response:this.response,
         baseUrl:this.baseUrl
       });
   }
