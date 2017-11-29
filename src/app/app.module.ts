@@ -46,6 +46,7 @@ import { File } from '@ionic-native/file';
 import { Camera } from '@ionic-native/camera';
 import { CallNumber } from "@ionic-native/call-number";
 import { Geolocation } from '@ionic-native/geolocation';
+import { PhotoViewer } from '@ionic-native/photo-viewer';
 
 // import { FilePath } from '@ionic-native/file-path';
 
@@ -117,6 +118,7 @@ import { Geolocation } from '@ionic-native/geolocation';
     Camera,
     CallNumber,
     Geolocation,
+    PhotoViewer,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     SubCategoryProvider,
     CategoryProvider,

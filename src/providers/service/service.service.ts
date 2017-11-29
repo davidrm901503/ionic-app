@@ -40,6 +40,18 @@ export class ServiceProvider {
       }
   }
 
+  get(search): Promise<Object> {
+    return this.http
+      .get(this.api.getbaseUrl() + 'api/searchService/'+search)
+      // .get<MyModel>(`${this.url}`)
+      .toPromise()
+      .then(
+        (response) => {
+          console.log(response);
+         return response;
+        }
+      ).catch(this.handleError);;
+}
 
   getServiceBySearch(search):Promise<Object>{
     if (this.auth.getUser()){
@@ -66,6 +78,17 @@ export class ServiceProvider {
 
   getServicesFavorites():Promise<Object>{
     return this.http.get(this.api.getbaseUrl() + 'api/myfavorites',{
+      headers: new HttpHeaders().set('Authorization',this.auth.getUser().token)
+     })
+      .toPromise()
+      .then(
+        (response) => {
+          return response;
+        }
+      ).catch(this.handleError);
+  }
+  denunciarService(id,denuncia):Promise<Object>{
+    return this.http.get(this.api.getbaseUrl() + 'api/complaint/'+id+"?complaint="+denuncia,{
       headers: new HttpHeaders().set('Authorization',this.auth.getUser().token)
      })
       .toPromise()

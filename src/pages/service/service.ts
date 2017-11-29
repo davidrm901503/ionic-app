@@ -36,7 +36,7 @@ export class ServicePage {
         this.service = data['data'];
       });
       // si recibo el servicio por params
-    //  this.service = this.navParams.get("serviceId");
+    //  this.service = this.navParams.get("service");
   }
 
   ionViewDidLoad() {
@@ -48,7 +48,7 @@ export class ServicePage {
       if(data.rate !== "cancel")
       this.servPro.rateservice(this.service.id,data.rate).then(
         data => {
-          console.log(data);
+          this.service.globalrate =data ['data'].globalrate;
         });
 
     });

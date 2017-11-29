@@ -28,10 +28,10 @@
                         </ion-col>
                     </ion-row>
                 </ion-grid>
-                <button ion-button color="azul-claro" (click)='openServicePage(serv.id)'><i class="fa fa-check" aria-hidden="true"></i>&nbsp;Ver detalle</button>
+                <button ion-button color="azul-claro" (tap)='openServicePage(serv.id)'><i class="fa fa-check" aria-hidden="true"></i>&nbsp;Ver detalle</button>
             </ion-item>
             <ion-item-options side="right">
-                <button (click)="delete(serv.id)" ion-button color="danger" style="font-size: 30px;">
+                <button (tap)="delete(serv.id)" ion-button color="danger" style="font-size: 30px;">
                 <ion-icon name="trash"></ion-icon>
               </button>
             </ion-item-options>

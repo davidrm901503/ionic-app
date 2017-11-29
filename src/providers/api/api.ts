@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import {AuthProvider} from  '../auth/auth'
-import {  HttpClient,  HttpHeaders } from "@angular/common/http";
+import {  HttpClient } from "@angular/common/http";
 
 /*
   Generated class for the ApiProvider provider.
@@ -11,20 +10,20 @@ import {  HttpClient,  HttpHeaders } from "@angular/common/http";
 @Injectable()
 export class ApiProvider {
 
-  // private apiBaseUrl = 'http://192.168.137.1/login/';
-  private apiBaseUrl = 'http://localhost/login/';
-  private days : object = {
-    0:"Domingo",
-    1:"Lunes",
-    2:"Martes",
-    3:"Miercoles",
-    4:"Jueves",
-    5:"Viernes",
-    6:"Sábado",
-   };
+  private apiBaseUrl = 'http://192.168.137.1/login/';
+  // private apiBaseUrl = 'http://localhost/login/';
+  private days : object;
 
   constructor(public http: HttpClient) {
-
+    this.days ={
+      0:"Domingo",
+      1:"Lunes",
+      2:"Martes",
+      3:"Miercoles",
+      4:"Jueves",
+      5:"Viernes",
+      6:"Sábado",
+    }
   }
 
   getCities():Promise<Object>{

@@ -1,4 +1,4 @@
-import { Component,ViewChild, ElementRef } from '@angular/core';
+import {Component, ViewChild, ElementRef} from '@angular/core';
 import {
   Platform,
   IonicPage,
@@ -6,40 +6,45 @@ import {
   NavParams,
   ModalController
 } from "ionic-angular";
-import { RatePage } from "../rate/rate";
-import { Geolocation } from '@ionic-native/geolocation';
-import { CallNumber } from "@ionic-native/call-number";
-import { ServiceProvider } from "../../providers/service/service.service";
-import { AuthProvider } from "../../providers/auth/auth";
+import {RatePage} from "../rate/rate";
+import {Geolocation} from '@ionic-native/geolocation';
+import {CallNumber} from "@ionic-native/call-number";
+import {ServiceProvider} from "../../providers/service/service.service";
+import {AuthProvider} from "../../providers/auth/auth";
+import {Positions} from "../../models/positions"
 
 declare var google;
+
 @IonicPage()
 @Component({
   selector: 'page-mapa',
   templateUrl: 'mapa.html',
 })
 export class MapaPage {
-  positions:  Object[];
-  infowindow =  new google.maps.InfoWindow;
+  locations: Positions[] = []
+  positions: Positions[] = [];
+  infowindow = new google.maps.InfoWindow;
   response: any;
   latLng: any;
   directionsService = new google.maps.DirectionsService;
   directionsDisplay = new google.maps.DirectionsRenderer;
-  distanceMatrix = new google.maps.DistanceMatrixService;
-
+  distanceM = new google.maps.DistanceMatrixService();
+  // distanceMatrix = new google.maps.DistanceMatrixService;
+ pepe:any;
   @ViewChild('map') mapElement: ElementRef;
   map: any;
   private service: any = {};
   private baseUrl: any;
-  latitude:any
-  longitude:any;
+  // latitude:any
+  // longitude:any;
   loggedIn: boolean;
-  currentPosition:any;
-  constructor(public auth: AuthProvider, public servPro: ServiceProvider,private callNumber: CallNumber,private platform: Platform,
-    public navCtrl: NavController,
-     public navParams: NavParams,
-     public modalCtrl: ModalController,
-     private geolocation: Geolocation) {
+  currentPosition: any;
+
+  constructor(public auth: AuthProvider, public servPro: ServiceProvider, private callNumber: CallNumber, private platform: Platform,
+              public navCtrl: NavController,
+              public navParams: NavParams,
+              public modalCtrl: ModalController,
+              private geolocation: Geolocation) {
 
     platform.ready().then(() => {
 
@@ -56,42 +61,87 @@ export class MapaPage {
       // });
 
     });
-}
+  }
 
   ionViewDidLoad() {
+
+
     this.response = this.navParams.get("response");
     this.service = this.response['data'];
     this.positions = this.response['positions'];
     this.baseUrl = this.navParams.get("baseUrl");
-    // this.latLng = new google.maps.LatLng(23.126606, -82.32528);
 
     this.geolocation.getCurrentPosition().then((resp) => {
+      //agrgando los positions del servicio
       this.loadMap();
-      this.latitude=resp.coords.latitude;
-      this.longitude =resp.coords.longitude
+
+      // this.latitude=resp.coords.latitude;
+      // this.longitude =resp.coords.longitude
       this.latLng = new google.maps.LatLng(resp.coords.latitude, resp.coords.longitude);
       this.map.setCenter(this.latLng);
       this.map.setZoom(15);
-     let marker = new google.maps.Marker({
-       map: this.map,
-       position: this.latLng
-     });
-     let content = "<h4>Mi posición</h4>";
-     this.addInfoWindow(marker, content);
+      let marker = new google.maps.Marker({
+        map: this.map,
+        // icon: "http://localhost/login/resources/image/categories/current.png",
+        position: this.latLng
+      });
+      let content = "<h4>Mi posición</h4>";
+      this.addInfoWindow(marker, content);
+
+
+      // para calcular la distancia
+      //  let destino1 = new google.maps.LatLng(23.126606, -82.32528);
+
+      var destinos = [];
+      //  destinos.push(destino1);
+
+      for (let i = 0; i < this.positions.length; i++) {
+        destinos.push(new google.maps.LatLng(this.positions[i].latitude,this.positions[i].longitude));
+      }
+      this.distanceM.getDistanceMatrix(
+        {
+          origins: [this.latLng],
+          destinations: destinos,
+          travelMode: 'DRIVING'
+        },this.pepe = this.showDistance);
+
     });
 
   }
+
+  showDistance(response, status,j) {
+    // return function(response, status) {
+      if(status == "OK"){
+        for (let i = 0; i < response.rows[0].elements.length; i++) {
+          var el = document.getElementById('pos'+i);
+          el.innerHTML = ":"+response.rows[0].elements[i].distance.text;
+        }
+
+      } else {
+          alert("Error: " + status);
+      }
+    // }
+    // let asd = [];
+    // for (let i = 0; i < response.rows[0].elements.length; i++) {
+    //  // this.positions[i].distance = response.rows[0].elements[i];
+    //   console.log(response.rows[0].elements[i]);
+    //   asd.push(response.rows[0].elements[i]);
+    //  // this.prueba(asd);
+    // }
+    // console.log(this.positions);
+return "gola"
+  }
+  prueba(a){
+    console.log(a);
+
+  }
+
   // mostrar ruta entre 2 puntos
   calculateAndDisplayRoute(p) {
-    console.log(p);
-    console.log(this.latLng);
-
-    var start = new google.maps.LatLng(this.latitude,this.longitude);
-    //var end = new google.maps.LatLng(38.334818, -181.884886);
     var end = new google.maps.LatLng(p.latitude, p.longitude);
     this.directionsService.route({
-      origin: start,
-      destination:  end,
+      origin: this.latLng,
+      destination: end,
       travelMode: 'DRIVING'
     }, (response, status) => {
       console.log(status);
@@ -103,64 +153,65 @@ export class MapaPage {
     });
   }
 
-  openRate(){
+  openRate() {
     const profileModal = this.modalCtrl.create(RatePage);
     profileModal.onDidDismiss(data => {
-      if(data.rate != "cancel")
-      this.servPro.rateservice(this.service.id,data.rate).then(
-        data => {
-          console.log(data);
-        });
+      if (data.rate != "cancel")
+        this.servPro.rateservice(this.service.id, data.rate).then(
+          data => {
+            console.log(data);
+          });
 
     });
 
     profileModal.present();
   }
 
-  Llamar(number){
+  Llamar(number) {
     this.callNumber.callNumber(number, true)
-    .then(() => console.log('Launched dialer!'))
-    .catch(() => console.log('Error launching dialer'));
+      .then(() => console.log('Launched dialer!'))
+      .catch(() => console.log('Error launching dialer'));
   }
 
-  loadMap(){
-      let mapOptions = {
-        center: this.latLng,
-        zoom: 15,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-      }
-      this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-      this.directionsDisplay.setMap(this.map);
-      var locations = this.response['positions'];
+  loadMap() {
+    let mapOptions = {
+      center: this.latLng,
+      zoom: 15,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+    this.directionsDisplay.setMap(this.map);
+    this.directionsDisplay.setOptions({suppressMarkers: true});
+    this.positions = this.response.data.positionsList;
 
-      for (let i = 0; i < locations.length; i++) {
+    for (let i = 0; i < this.positions.length; i++) {
       let marker = new google.maps.Marker({
         map: this.map,
-        position: new google.maps.LatLng(locations[i].latitude, locations[i].longitude)
+        position: new google.maps.LatLng(this.positions[i].latitude, this.positions[i].longitude)
       });
-      let content = "<h4>"+locations[i].title +"</h4>";
+      let content = "<h4>" + this.positions[i].title + "</h4>";
       this.addInfoWindow(marker, content);
-      }
     }
+  }
 
-
-  getLocation(){
-        this.geolocation.getCurrentPosition().then((resp) => {
-        this.latLng = new google.maps.LatLng(resp.coords.latitude, resp.coords.longitude);
-        this.map.setCenter(this.latLng);
-        this.map.setZoom(15);
-       let marker = new google.maps.Marker({
-         map: this.map,
-         position: this.latLng
-       });
-       let content = "<h4>Mi posición</h4>";
-       this.addInfoWindow(marker, content);
+  getLocation() {
+    this.geolocation.getCurrentPosition().then((resp) => {
+      this.latLng = new google.maps.LatLng(resp.coords.latitude, resp.coords.longitude);
+      this.map.setCenter(this.latLng);
+      this.map.setZoom(15);
+      let marker = new google.maps.Marker({
+        map: this.map,
+        position: this.latLng
+      });
+      let content = "<h4>Mi posición</h4>";
+      this.addInfoWindow(marker, content);
     }).catch((error) => {
       console.log('Error getting location', error);
     });
 
   }
-  addInfoWindow(marker, content){
+
+  addInfoWindow(marker, content) {
 
     google.maps.event.addListener(marker, 'click', () => {
       this.infowindow.setContent(content)

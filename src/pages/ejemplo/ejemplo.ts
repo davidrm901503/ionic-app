@@ -60,7 +60,7 @@ export class EjemploPage {
   }
 
 callbakc (response, status){
-console.log(response);
+  console.log(response);
 }
 
 // mostrar ruta entre 2 puntos

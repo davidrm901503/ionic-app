@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams,LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,LoadingController, AlertController } from 'ionic-angular';
 import  {ServiceProvider} from  '../../providers/service/service.service';
 import  {AuthProvider} from  '../../providers/auth/auth';
 import { ServicePage } from "../service/service";
 import { HttpErrorResponse } from "@angular/common/http";
 import { ApiProvider } from "../../providers/api/api";
+import { PhotoViewer } from '@ionic-native/photo-viewer';
 
 @IonicPage()
 @Component({
@@ -34,7 +35,9 @@ export class ServicesPage {
     public api: ApiProvider,
     public navParams: NavParams,
     public servProv: ServiceProvider,
-    public load: LoadingController
+    public load: LoadingController,
+    private photoViewer: PhotoViewer,
+    public alertCtrl: AlertController
   ) {
     this.baseUrl = api.getbaseUrl();
     this.loggedIn = auth.isLoggedIn();
@@ -49,6 +52,46 @@ export class ServicesPage {
     };
     this.loadSelect();
 
+  }
+  viewImg(img){
+    this.photoViewer.show(this.baseUrl+img);
+  }
+  showPromptDenuncia(id) {
+    let prompt = this.alertCtrl.create({
+      title: 'Denunciar servicio',
+      message: "Escriba la denuncia",
+      enableBackdropDismiss:false,
+      inputs: [
+        {
+          name: 'denuncia',
+          type: 'textarea',
+
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: data => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Denunciar',
+          handler: data => {
+            const navTransition = prompt.dismiss();
+            this.servProv.denunciarService(id,data.denuncia).then(
+              res => {
+                // navTransition.then(() => {
+                //   this.navCtrl.pop();
+                // });
+              } );
+
+              return false;
+          }
+        }
+      ]
+    });
+    prompt.present();
   }
 
   toogleFavorite(index,id){

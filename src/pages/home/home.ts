@@ -58,36 +58,43 @@ export class HomePage {
      public keyboard: Keyboard,
      navParams: NavParams,public splashScreen: SplashScreen,public platform: Platform) {
       this.connetionDown = false;
+      this.platform.ready().then(() => {
+        this.subCat.topSubcategories().then(
+          data => {
+            this.subCategories =data['data'];
+            setTimeout(() => {
+              this.splashScreen.hide();
+            }, 1500);
+
+            this.connetionDown = false;
+          },
+          (err: HttpErrorResponse) => {
+            if (err.error instanceof Error) {
+              this.connetionDown = true;
+              this.splashScreen.hide();
+            } else {
+              this.connetionDown = true;
+              this.splashScreen.hide();
+
+            }
+        });
+      });
   }
 
   ionViewDidLoad() {
     this.platform.ready().then(() => {
-      this.platform.registerBackButtonAction((readySource) => {
-       this.platform.exitApp();
-      });
+      // this.platform.registerBackButtonAction((readySource) => {
+      //  this.platform.exitApp();
+      // });
       this.busqueda = false;
       this.noFound = false;
       this.baseUrl = this.api.getbaseUrl();
       this.auth.currentUser.subscribe(user=>{
         this.loggedIn = !!user;
       });
-       this.subCat.topSubcategories().then(
-        data => {
-          this.subCategories =data['data'];
-          this.splashScreen.hide();
-          this.connetionDown = false;
-        },
-        (err: HttpErrorResponse) => {
-          if (err.error instanceof Error) {
-            this.connetionDown = true;
-            this.splashScreen.hide();
-          } else {
-            this.splashScreen.hide();
-            this.connetionDown = true;
-          }
-        });
+
     });
-      }
+  }
 
   searchServices(query){
 
@@ -95,6 +102,7 @@ export class HomePage {
     this.loading.present();
     this.servProv.getServiceBySearch(query).then(
       data => {
+        console.log(data);
         this.services =data['data'];
         this.noFound = this.services.length == 0 ? true : false;
         this.loading.dismiss();
@@ -103,9 +111,11 @@ export class HomePage {
         if (err.error instanceof Error) {
           this.connetionDown = true;
           this.loading.dismiss();
+          console.log(err,"instace");
         } else {
           this.loading.dismiss();
           this.connetionDown = true;
+          console.log(err,"segundo");
         }
       });
   }
@@ -171,6 +181,21 @@ export class HomePage {
         this.connetionDown = true;
       }
     );
+  }
+  toogleFavorite(index,id){
+    if(this.services[index].favorite == 1){
+      this.servProv.diskMarkfavorite(id).then(
+        data => {
+          this.services[index].favorite = 0;
+        } );
+    }
+    else{
+      this.servProv.markfavorite(id).then(
+        data => {
+          this.services[index].favorite = 1;
+        });
+    }
+
   }
 }
 
