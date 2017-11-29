@@ -103,7 +103,7 @@ export class MapaPage {
           origins: [this.latLng],
           destinations: destinos,
           travelMode: 'DRIVING'
-        },this.pepe = this.showDistance);
+        },this.showDistance);
 
     });
 
