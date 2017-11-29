@@ -11,7 +11,8 @@ import {Geolocation} from '@ionic-native/geolocation';
 import {CallNumber} from "@ionic-native/call-number";
 import {ServiceProvider} from "../../providers/service/service.service";
 import {AuthProvider} from "../../providers/auth/auth";
-import {Positions} from "../../models/positions"
+import {Positions} from "../../models/positions";
+import { Events } from 'ionic-angular';
 
 declare var google;
 
@@ -44,10 +45,13 @@ export class MapaPage {
               public navCtrl: NavController,
               public navParams: NavParams,
               public modalCtrl: ModalController,
-              private geolocation: Geolocation) {
+              private geolocation: Geolocation,public events: Events) {
 
     platform.ready().then(() => {
-
+      events.subscribe('user:created', (user, time) => {
+        // user and time are the same arguments passed in `events.publish(user, time)`
+        console.log('Welcome', user, 'at', time);
+      });
 
       // // get current position
       // geolocation.getCurrentPosition().then(pos => {
@@ -103,15 +107,16 @@ export class MapaPage {
           origins: [this.latLng],
           destinations: destinos,
           travelMode: 'DRIVING'
-        },this.showDistance);
+        },this.showDistance(this.events));
 
     });
 
   }
 
-  showDistance(response, status,j) {
-    // return function(response, status) {
+  showDistance(event) {
+     return function(response, status) {
       if(status == "OK"){
+        event.publish('user:created', "user", Date.now());
         for (let i = 0; i < response.rows[0].elements.length; i++) {
           var el = document.getElementById('pos'+i);
           el.innerHTML = ":"+response.rows[0].elements[i].distance.text;
@@ -129,8 +134,9 @@ export class MapaPage {
     //  // this.prueba(asd);
     // }
     // console.log(this.positions);
-return "gola"
   }
+}
+
   prueba(a){
     console.log(a);
 
