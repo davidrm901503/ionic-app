@@ -18,7 +18,9 @@ import { ComentariosPage } from "../comentarios/comentarios";
 export class ServicePage {
   response: Object;
   private service: any = {};
+  private passedService: any = {};
   private baseUrl: any;
+  cant_c :number;
   loggedIn: boolean;
   constructor(public navParams: NavParams,
     private callNumber: CallNumber,
@@ -28,34 +30,41 @@ export class ServicePage {
     public auth: AuthProvider,
     public navCtrl: NavController
    ) {
-      this.loggedIn = auth.isLoggedIn();
-      this.baseUrl = this.api.getbaseUrl();
       // si recibo el id del servicio
       this.servPro.getService(this.navParams.get("serviceId")).then(data=> {
         this.response = data;
         this.service = data['data'];
       });
-      // si recibo el servicio por params
-    //  this.service = this.navParams.get("service");
+
   }
 
   ionViewDidLoad() {
-
+    this.loggedIn = this.auth.isLoggedIn();
+    this.baseUrl = this.api.getbaseUrl();
+   this.passedService = this.navParams.get("service");
+   this.cant_c=this.passedService.servicecommentsList.length  ? this.passedService.servicecommentsList.length : 0
   }
   openRate(){
-    const profileModal = this.modalCtrl.create(RatePage);
+    const profileModal = this.modalCtrl.create(RatePage,{rated:this.service.rated});
     profileModal.onDidDismiss(data => {
       if(data.rate !== "cancel")
       this.servPro.rateservice(this.service.id,data.rate).then(
         data => {
-          this.service.globalrate =data ['data'].globalrate;
+          this.passedService.globalrate = data['data'].globalrate;
+          this.passedService.rated =data['data'].rated;;
         });
-
     });
 
     profileModal.present();
   }
-
+  // Llamar(number){
+  //   this.callNumber.callNumber(number, true)
+  //   .then(() => {
+  //     console.log("contacto");
+  //     this.api.contactservice(this.passedService.id);
+  //   })
+  //   .catch(() => console.log('Error launching dialer'));
+  // }
   Llamar(number){
     this.callNumber.callNumber(number, true)
     .then(() => console.log('Launched dialer!'))

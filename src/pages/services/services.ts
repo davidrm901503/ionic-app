@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams,LoadingController, AlertController } from 'ionic-angular';
-import  {ServiceProvider} from  '../../providers/service/service.service';
-import  {AuthProvider} from  '../../providers/auth/auth';
-import { ServicePage } from "../service/service";
-import { HttpErrorResponse } from "@angular/common/http";
-import { ApiProvider } from "../../providers/api/api";
-import { PhotoViewer } from '@ionic-native/photo-viewer';
+import {Component} from '@angular/core';
+import {IonicPage, NavController, NavParams, LoadingController, AlertController,  Platform, Events} from 'ionic-angular';
+import {ServiceProvider} from '../../providers/service/service.service';
+import {AuthProvider} from '../../providers/auth/auth';
+import {ServicePage} from "../service/service";
+import {HttpErrorResponse} from "@angular/common/http";
+import {ApiProvider} from "../../providers/api/api";
+import {PhotoViewer} from '@ionic-native/photo-viewer';
 
 @IonicPage()
 @Component({
@@ -21,9 +21,8 @@ export class ServicesPage {
 
   city: any;
   category: any;
-
   subCatId: any;
-  services :any;
+  services: any[]=[];
   categoryId: any;
   baseUrl: any;
   loggedIn: boolean;
@@ -33,34 +32,43 @@ export class ServicesPage {
     public navCtrl: NavController,
     public auth: AuthProvider,
     public api: ApiProvider,
-    public navParams: NavParams,
+    public navParams: NavParams,public events: Events,
     public servProv: ServiceProvider,
     public load: LoadingController,
-    private photoViewer: PhotoViewer,
-    public alertCtrl: AlertController
-  ) {
-    this.baseUrl = api.getbaseUrl();
-    this.loggedIn = auth.isLoggedIn();
-    this.subCatId = navParams.get("subCatId");
-    this.servicesBySubCat(navParams.get("subCatId"));
-    //this.servicesBySubCat(navParams.get("subCatId"));
-    this.citiestOptions = {
-      title: "Ciudades"
-    };
-    this.catOptions = {
-      title: "Categorias"
-    };
-    this.loadSelect();
+    private photoViewer: PhotoViewer, private platform: Platform,
+    public alertCtrl: AlertController) {
+      platform.ready().then(() => {
+        this.events.subscribe('dismark:favorite', (id) => {
+          // for (var i = 0; i < this.services.length; i++) {
+          //   if (this.services[i].id ==id) {
+          //     this.services[i].favorite = 0;
+          //     break;
+          //   }
+          // }
+          let index = this.services.findIndex(this.findServById, id);
+          this.services[index].favorite = 0;
+
+      });
+      this.servicesBySubCat(navParams.get("subCatId"));
+      this.loadSelect();
+    });
+
+
 
   }
-  viewImg(img){
-    this.photoViewer.show(this.baseUrl+img);
+
+  viewImg(img) {
+    this.photoViewer.show(this.baseUrl + img);
   }
+  findServById(element,index,array) {
+    return element.id == this;
+  }
+
   showPromptDenuncia(id) {
     let prompt = this.alertCtrl.create({
       title: 'Denunciar servicio',
       message: "Escriba la denuncia",
-      enableBackdropDismiss:false,
+      enableBackdropDismiss: false,
       inputs: [
         {
           name: 'denuncia',
@@ -78,15 +86,7 @@ export class ServicesPage {
         {
           text: 'Denunciar',
           handler: data => {
-            const navTransition = prompt.dismiss();
-            this.servProv.denunciarService(id,data.denuncia).then(
-              res => {
-                // navTransition.then(() => {
-                //   this.navCtrl.pop();
-                // });
-              } );
-
-              return false;
+             this.servProv.denunciarService(id, data.denuncia)
           }
         }
       ]
@@ -94,14 +94,14 @@ export class ServicesPage {
     prompt.present();
   }
 
-  toogleFavorite(index,id){
-    if(this.services[index].favorite == 1){
+  toogleFavorite(index, id) {
+    if (this.services[index].favorite == 1) {
       this.servProv.diskMarkfavorite(id).then(
         data => {
           this.services[index].favorite = 0;
-        } );
+        });
     }
-    else{
+    else {
       this.servProv.markfavorite(id).then(
         data => {
           this.services[index].favorite = 1;
@@ -110,7 +110,7 @@ export class ServicesPage {
 
   }
 
-  loadSelect(){
+  loadSelect() {
     this.api.getCities().then(
       data => {
         this.cities = data["data"];
@@ -134,7 +134,6 @@ export class ServicesPage {
   }
 
 
-
   // servicios dada una subCat
   servicesBySubCat(id) {
     let loading = this.load.create({
@@ -148,26 +147,59 @@ export class ServicesPage {
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
-
-          // loading.dismiss();
         } else {
           console.log(err);
-          // loading.dismiss();
         }
       }
     );
   }
 
   ionViewDidLoad() {
+    this.baseUrl = this.api.getbaseUrl();
+    this.loggedIn = this.auth.isLoggedIn();
+    this.subCatId = this.navParams.get("subCatId");
+
+    this.citiestOptions = {
+      title: "Ciudades"
+    };
+    this.catOptions = {
+      title: "Categorias"
+    };
   }
-  openServicePage(id) {
+
+  ionViewDidEnter() {
+    console.log( "DidEnter ");
+    // if (this.didLoad > 0) {
+    //   this.servProv.getServiceBySubCat(this.subCatId).then(
+    //     data => {
+    //       this.services = data["data"];
+    //       this.services[0].title = "siiiiiiii";
+    //     }
+    //   );
+    // }
+    // this.didLoad++;
+  }
+
+  ionViewWillEnter() {
+
+
+  }
+
+  openServicePage(id,index) {
     this.navCtrl.push(ServicePage, {
-      // serviceId: this.services[id]  //si paso el index
-      serviceId: id  //si paso el id del servicio
+      service: this.services[index], //paso el service
+      serviceId: id,  //si paso el id del servicio para la peticion
+      parentPage: this
+
     });
   }
 
+  prueba() {
+
+  }
+
   doRefresh(refresher) {
+
     this.servProv.getServiceBySubCat(this.subCatId).then(
       data => {
         this.services = data["data"];
@@ -184,6 +216,7 @@ export class ServicesPage {
   deleteCity() {
     this.city = null;
   }
+
   deleteCategory() {
     this.category = null;
   }

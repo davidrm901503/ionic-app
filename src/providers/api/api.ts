@@ -10,8 +10,8 @@ import {  HttpClient } from "@angular/common/http";
 @Injectable()
 export class ApiProvider {
 
-  private apiBaseUrl = 'http://192.168.137.1/login/';
-  // private apiBaseUrl = 'http://localhost/login/';
+  private apiBaseUrl = 'http://192.168.137.1/services/';
+  // private apiBaseUrl = 'http://localhost/services/';
   private days : object;
 
   constructor(public http: HttpClient) {
@@ -25,7 +25,15 @@ export class ApiProvider {
       6:"Sábado",
     }
   }
-
+  test():Promise<any>{
+    return this.http.get(this.apiBaseUrl + 'api/test')
+      .toPromise()
+      .then(
+        (response) => {
+          return response;
+        }
+      ).catch(this.handleError);
+  }
   getCities():Promise<Object>{
     return this.http.get(this.apiBaseUrl + 'api/cities')
       .toPromise()
@@ -44,7 +52,27 @@ export class ApiProvider {
         }
       ).catch(this.handleError);
   }
-
+  // contactservice(id):Promise<Object>{
+  //   if (this.auth.getUser()){
+  //   return this.http.get(this.apiBaseUrl + 'api/contactservice',{
+  //     headers: new HttpHeaders().set('Authorization', this.auth.getUser().token)
+  //    })
+  //     .toPromise()
+  //     .then(
+  //       (response) => {
+  //         return response;
+  //       }
+  //     ).catch(this.handleError);
+  //   }else{
+  //     return this.http.get(this.apiBaseUrl + 'api/contactservice')
+  //       .toPromise()
+  //       .then(
+  //         (response) => {
+  //           return response;
+  //         }
+  //       ).catch(this.handleError);
+  //   }
+  // }
   getbaseUrl(): string{
     return this.apiBaseUrl;
   }

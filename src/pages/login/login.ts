@@ -44,15 +44,23 @@ export class LoginPage {
       buttons: [
         {
           text: 'Cancel',
-          handler: data => {
-            console.log('Cancel clicked');
-          }
+          role: 'cancel'
+
         },
         {
           text: ' Enviarme contraseña',
           handler: data => {
-            console.log('Cancel clicked');
-            // const navTransition = prompt.dismiss();
+           if(this.authService.validateEmail( data.email)){
+            let toast = this.toastCtrl.create({
+              message: "La contraseña se a enviando a su correo",
+              duration: 5000,
+              position: 'bottom',
+              showCloseButton:true,
+              closeButtonText:"Cerrar"
+            });
+            toast.present();
+
+             // const navTransition = prompt.dismiss();
 
                   // start some async method
                   // someAsyncOperation().then(() => {
@@ -64,7 +72,14 @@ export class LoginPage {
                   //     this.nav.pop();
                   //   });
                   // });
-                  //return false;
+
+           }
+           else
+           {
+            return false;
+           }
+
+
           }
         }
       ]
@@ -75,7 +90,7 @@ export class LoginPage {
      this.loading = this.load.create();
      this.loading.present();
      this.authService.login(this.user)
-      .subscribe(result => {
+      .then(result => {
         if (result === true) {
           this.loading.dismiss();
            this.navCtrl.setRoot(HomePage);
@@ -89,13 +104,31 @@ export class LoginPage {
             closeButtonText:"Cerrar"
           });
           toast.present();
+          this.loading.dismiss();
         }
-      });
+      }).catch(
+        (error) => {
+          let toast = this.toastCtrl.create({
+            message: "No hay conexión a internet",
+            duration: 5000,
+            position: 'bottom',
+            showCloseButton:true,
+          });
+          toast.present();
+          this.loading.dismiss();
+          // this.navCtrl.goToRoot({});
+          this.navCtrl.setRoot(HomePage,{
+            connetionDown:true
+          });
+          this.navCtrl.pop();
+        }
+      );
   }
+
 
 llenarCampos(){
    let toast = this.toastCtrl.create({
-      message: "llenar todos los campos",
+      message: "Debe llenar los campos correctamente",
       duration: 5000,
       position: 'bottom',
       showCloseButton:true,
@@ -106,8 +139,7 @@ llenarCampos(){
 openForgot(){
   const profileModal = this.modalCtrl.create(ForgotPage);
   profileModal.onDidDismiss(data => {
-    // enviar contraseña
-    console.log(data);
+
   });
 
   profileModal.present();
