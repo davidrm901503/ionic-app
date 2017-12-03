@@ -4,30 +4,31 @@
 
 
 
-<ion-content padding fixed-top>
-    <h4 color="azul-claro">Crear Anuncio <small>Datos iniciales</small></h4>
-    <hr class="hr-separador">
-    <div class="progress">
-        <div class="circle active"> <span class="label">1</span>
+<ion-content padding>
+    <div ion-fixed>
+        <h4 class="azul-claro">Crear Anuncio <small style="color: rgb(90, 84, 84)">Datos iniciales</small></h4>
+        <hr class="hr-separador">
+        <div class="progress">
+            <div class="circle active"> <span class="label">1</span>
 
-        </div> <span class="bar  "></span>
+            </div> <span class="bar  "></span>
 
-        <div class="circle"> <span class="label">2</span>
+            <div class="circle"> <span class="label">2</span>
 
-        </div> <span class="bar "></span>
+            </div> <span class="bar "></span>
 
-        <div class="circle"> <span class="label">3</span>
+            <div class="circle"> <span class="label">3</span>
 
-        </div> <span class="bar"></span>
+            </div> <span class="bar"></span>
 
-        <div class="circle"> <span class="label">4</span>
+            <div class="circle"> <span class="label">4</span>
+
+            </div>
 
         </div>
 
-    </div>
 
 
-    <ion-list>
         <form #formu="ngForm">
             <ion-item>
                 <ion-label stacked>Título</ion-label>
@@ -86,16 +87,16 @@
             </ion-item>
 
         </form>
-    </ion-list>
 
 
+    </div>
 </ion-content>
 <ion-footer>
     <ion-toolbar>
 
         <ion-buttons right>
             <button ion-button icon-start>
-                <ion-icon name="star"></ion-icon>
+                <ion-icon name="arrow-right"></ion-icon>
               Siguiente
               </button>
         </ion-buttons>

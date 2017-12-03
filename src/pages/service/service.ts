@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage,NavParams,ModalController,NavController} from "ionic-angular";
-// import { CallNumber } from '@ionic-native/call-number';
+import { IonicPage,NavParams,ModalController,NavController, Events} from "ionic-angular";
 import  {ServiceProvider} from  '../../providers/service/service.service';
 import { ApiProvider } from "../../providers/api/api";
 import { RatePage } from "../rate/rate";
@@ -28,8 +27,10 @@ export class ServicePage {
     public api: ApiProvider,
     public modalCtrl: ModalController,
     public auth: AuthProvider,
-    public navCtrl: NavController
+    public navCtrl: NavController,
+    public events: Events
    ) {
+
       // si recibo el id del servicio
       this.servPro.getService(this.navParams.get("serviceId")).then(data=> {
         this.response = data;
@@ -44,19 +45,27 @@ export class ServicePage {
    this.passedService = this.navParams.get("service");
    this.cant_c=this.passedService.servicecommentsList.length  ? this.passedService.servicecommentsList.length : 0
   }
-  openRate(){
-    const profileModal = this.modalCtrl.create(RatePage,{rated:this.passedService.rated});
-    profileModal.onDidDismiss(data => {
-      if(data.rate !== "cancel")
-      this.servPro.rateservice(this.service.id,data.rate).then(
-        data => {
-          this.passedService.globalrate = data['data'].globalrate;
-          this.passedService.rated =data['data'].rated;;
-        });
-    });
+  ionViewDidEnter() {
 
-    profileModal.present();
+    this.events.subscribe('user:commented', (comentarios) => {
+    this.passedService.servicecommentsList= comentarios;
+    this.cant_c+=1;
+
+    });
   }
+  // openRate(){
+  //   const profileModal = this.modalCtrl.create(RatePage,{rated:this.passedService.rated});
+  //   profileModal.onDidDismiss(data => {
+  //     if(data.rate !== "cancel")
+  //     this.servPro.rateservice(this.service.id,data.rate).then(
+  //       data => {
+  //         this.passedService.globalrate = data['data'].globalrate;
+  //         this.passedService.rated =data['data'].rated;;
+  //       });
+  //   });
+
+  //   profileModal.present();
+  // }
 
   openInfo(){
       this.navCtrl.push(InfoPage,{

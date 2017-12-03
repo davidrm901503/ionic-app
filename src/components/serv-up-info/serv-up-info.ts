@@ -3,7 +3,7 @@ import { CallNumber } from '@ionic-native/call-number';
 import { AuthProvider } from '../../providers/auth/auth';
 import { ApiProvider } from '../../providers/api/api';
 import { RatePage } from '../../pages/rate/rate';
-import { ModalController } from 'ionic-angular';
+import { ModalController, Platform } from 'ionic-angular';
 import { ServiceProvider } from '../../providers/service/service.service';
 import {PhotoViewer} from '@ionic-native/photo-viewer';
 
@@ -22,7 +22,7 @@ export class ServUpInfoComponent {
     private callNumber: CallNumber,
     public servPro: ServiceProvider,
     public modalCtrl: ModalController,
-    private photoViewer: PhotoViewer
+    private photoViewer: PhotoViewer,private platform: Platform
   ) {
 
   }
@@ -53,7 +53,9 @@ export class ServUpInfoComponent {
     profileModal.present();
   }
   viewImg(img) {
+    this.platform.ready().then(() => {
     this.photoViewer.show(this.baseUrl + img);
+    });
   }
 
 }

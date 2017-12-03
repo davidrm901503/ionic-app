@@ -39,15 +39,8 @@ export class ServicesPage {
     public alertCtrl: AlertController) {
       platform.ready().then(() => {
         this.events.subscribe('dismark:favorite', (id) => {
-          // for (var i = 0; i < this.services.length; i++) {
-          //   if (this.services[i].id ==id) {
-          //     this.services[i].favorite = 0;
-          //     break;
-          //   }
-          // }
           let index = this.services.findIndex(this.findServById, id);
           this.services[index].favorite = 0;
-
       });
       this.servicesBySubCat(navParams.get("subCatId"));
       this.loadSelect();
@@ -58,7 +51,9 @@ export class ServicesPage {
   }
 
   viewImg(img) {
+    this.platform.ready().then(() => {
     this.photoViewer.show(this.baseUrl + img);
+    });
   }
   findServById(element,index,array) {
     return element.id == this;
@@ -167,18 +162,6 @@ export class ServicesPage {
     };
   }
 
-  ionViewDidEnter() {
-    console.log( "DidEnter ");
-    // if (this.didLoad > 0) {
-    //   this.servProv.getServiceBySubCat(this.subCatId).then(
-    //     data => {
-    //       this.services = data["data"];
-    //       this.services[0].title = "siiiiiiii";
-    //     }
-    //   );
-    // }
-    // this.didLoad++;
-  }
 
   ionViewWillEnter() {
 
@@ -192,10 +175,6 @@ export class ServicesPage {
       parentPage: this
 
     });
-  }
-
-  prueba() {
-
   }
 
   doRefresh(refresher) {

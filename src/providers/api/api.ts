@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {  HttpClient,  HttpHeaders } from "@angular/common/http";
 
 
+
 /*
   Generated class for the ApiProvider provider.
 
@@ -14,6 +15,7 @@ export class ApiProvider {
   private apiBaseUrl = 'http://192.168.137.1/services/';
   // private apiBaseUrl = 'http://localhost/services/';
   private days : object;
+  user:any;
 
   constructor(public http: HttpClient) {
     this.days ={
@@ -25,13 +27,14 @@ export class ApiProvider {
       5:"Viernes",
       6:"Sábado",
     }
+    this.user =JSON.parse(localStorage.getItem('ServCurrentUser')) ;
   }
 
   contactservice(id):Promise<any>{
-    let user =JSON.parse(localStorage.getItem('ServCurrentUser')) ;
-    if (user){
+
+    if (this.user){
     return this.http.get(this.apiBaseUrl + 'api/contactservice/'+id,{
-      headers: new HttpHeaders().set('Authorization', user.token)
+      headers: new HttpHeaders().set('Authorization', this.user.token)
      })
       .toPromise()
       .then(
@@ -69,27 +72,20 @@ export class ApiProvider {
         }
       ).catch(this.handleError);
   }
-  // contactservice(id):Promise<Object>{
-  //   if (this.auth.getUser()){
-  //   return this.http.get(this.apiBaseUrl + 'api/contactservice',{
-  //     headers: new HttpHeaders().set('Authorization', this.auth.getUser().token)
-  //    })
-  //     .toPromise()
-  //     .then(
-  //       (response) => {
-  //         return response;
-  //       }
-  //     ).catch(this.handleError);
-  //   }else{
-  //     return this.http.get(this.apiBaseUrl + 'api/contactservice')
-  //       .toPromise()
-  //       .then(
-  //         (response) => {
-  //           return response;
-  //         }
-  //       ).catch(this.handleError);
-  //   }
-  // }
+  addComment(id, comment){
+    if (this.user){
+    return this.http.post(this.apiBaseUrl + 'api/addcomment/'+id,{comment}, {
+      headers: new HttpHeaders().set('Authorization', this.user.token)
+     })
+      .toPromise()
+      .then(
+        (response) => {
+          return response;
+        }
+      ).catch(this.handleError);
+    }
+  }
+
   getbaseUrl(): string{
     return this.apiBaseUrl;
   }

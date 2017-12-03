@@ -103,8 +103,10 @@ export class HomePage {
       this.connetionDown = true;
     }
   }
-  viewImg(img){
-    this.photoViewer.show(this.baseUrl+img);
+  viewImg(img) {
+    this.platform.ready().then(() => {
+    this.photoViewer.show(this.baseUrl + img);
+    });
   }
 
 

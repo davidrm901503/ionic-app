@@ -6,7 +6,7 @@
                     <ion-thumbnail item-start>
                         <img (tap)="viewImg(serv.icon)" [src]="passedService.icon ? baseUrl + passedService.icon : 'assets/imgs/service_img.png' ">
                     </ion-thumbnail>
-                    <h1>{{passedService.title}}</h1>
+                    <h1 text-wrap>{{passedService.title}}</h1>
                     <p text-wrap>{{passedService.subtitle}}</p>
                 </ion-item>
                 <p text-wrap>{{passedService.address}}</p>
@@ -14,7 +14,7 @@
             </ion-list>
         </ion-col>
         <ion-col col-3 float-start>
-            <strong><ion-label class="fs-25" color="azul-claro">{{passedService.globalrate}}/10</ion-label></strong>
+            <strong><ion-label class="fs-20" color="azul-claro">{{passedService.globalrate}}/10</ion-label></strong>
             <button class="fs-10" *ngIf=loggedIn (tap)="openRate(passedService.id,passedService.rated,passedService)" color="azul-claro" ion-button>
             Evaluar
             </button>

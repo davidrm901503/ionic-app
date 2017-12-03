@@ -10,10 +10,10 @@
 <ion-content padding>
     <serv-up-info [passedService]="service" [cant_c]="cant_c" (rateService)="rateService($event)"></serv-up-info>
 
-    <ion-label text-center color="azul-claro">
+    <ion-label *ngIf="service.description" text-center color="azul-claro">
         Descripción General
     </ion-label>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel maiores eligendi, quibusdam nisi labore amet exercitationem accusantium inventore accusamus quas velit nulla ipsa voluptatibus voluptatum possimus assumenda vitae adipisci. Accusamus?</p>
+    <p text-wrap>{{service.description}}</p>
     <ion-grid>
         <ion-row>
             <ion-col col-12>

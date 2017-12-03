@@ -9,32 +9,25 @@
 
 <ion-content padding>
     <serv-up-info [passedService]="service" [cant_c]="cant_c" (rateService)="rateService($event)"></serv-up-info>
-
-    <ion-label text-center color="azul-claro">
-        Escribe tu comentario
-    </ion-label>
-    <ion-textarea rows="3" placeholder="Escribe tu comentario"></ion-textarea>
-    <button class="btn-text-left" text-left color="azul-claro" ion-button block margin-bottom="1">
-        <ion-icon name="call" style="font-size: 30px;"></ion-icon>
+    <div *ngIf="loggedIn">
+        <ion-label text-center color="azul-claro">
+            Escribe tu comentario
+        </ion-label>
+        <ion-textarea name="comentario" [(ngModel)]="comentario" #com="ngModel" rows="3" placeholder="Escribe tu comentario"></ion-textarea>
+        <button (tap)="comentar()" [disabled]="!comentario" class="btn-text-left" text-left color="azul-claro" ion-button block margin-bottom="1">
+        <ion-icon class="fs-30" name="chatboxes" ></ion-icon>
         &nbsp;Comentar
       </button>
+    </div>
     <ion-label text-center color="azul-claro">
         Comentarios anterioles
     </ion-label>
 
-    <div style="border-bottom: 1px solid  #88868B">
-        <p style="float: left;">User 1</p>
-        <p style="float: right">2014-05-12</p>
+    <div *ngFor="let comment of comentarios">
+        <p float-left class="azul-claro">{{comment.user.username}}</p>
+        <p float-right class="azul-claro"> {{comment.created.date | date:'yyyy/M/d'}}</p>
         <div style="clear: both;"></div>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta similique id saepe, laudantium dolor molestias maxime a assumenda ipsam autem exercitationem deleniti possimus quaerat modi blanditiis esse expedita sint quo?</p>
+        <p>{{comment.comment}}</p>
+
+        <hr class="hr-separador">
     </div>
-    <div style="border-bottom: 1px solid  #88868B">
-        <p style="float: left;">User 2</p>
-        <p style="float: right">2014-05-12</p>
-        <div style="clear: both;"></div>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta similique id saepe, laudantium dolor molestias maxime a assumenda ipsam autem exercitationem deleniti possimus quaerat modi blanditiis esse expedita sint quo?</p>
-    </div>
-
-
-
-</ion-content>
