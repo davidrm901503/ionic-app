@@ -34,12 +34,11 @@ export class SignupPage {
     .then(
       (result) => {
         if (result === true) {
-            loading.dismiss();
+
              let toast = this.toastCtrl.create({
               message: "Se ha registrado satifactoriamente!",
               duration: 5000,
-              position: 'bottom',
-              showCloseButton:true,
+              position: 'bottom'
             });
             toast.present();
             this.navCtrl.setRoot(HomePage);
@@ -48,12 +47,11 @@ export class SignupPage {
               let toast = this.toastCtrl.create({
                 message: "Ya ese email esta en uso",
                 duration: 5000,
-                position: 'top',
-                showCloseButton:true,
-                closeButtonText:"Cerrar"
+                position: 'top'
               });
               toast.present();
             }
+            loading.dismiss();
       }
     ).catch(
       (error) => {

@@ -32,6 +32,7 @@ import { Create1Page } from "../pages/create1/create1";
 // Componentes
 import {AppHeaderComponent} from '../components/app-header/app-header';
 import { IonRating } from '../components/ion-rating/ion-rating';
+import { ServUpInfoComponent } from '../components/serv-up-info/serv-up-info';
 
 //Servicios
 import { SubCategoryProvider } from '../providers/sub-category/sub-category';
@@ -69,6 +70,7 @@ import { PhotoViewer } from '@ionic-native/photo-viewer';
     ForgotPage,
     RatePage,
     IonRating,
+    ServUpInfoComponent,
     InfoPage,
     MapaPage,
     GaleriaPage,

@@ -2,15 +2,10 @@ import {Component, ViewChild, ElementRef} from '@angular/core';
 import {
   Platform,
   IonicPage,
-  NavController,
-  NavParams,
-  ModalController
+  NavParams
 } from "ionic-angular";
-import {RatePage} from "../rate/rate";
+
 import {Geolocation} from '@ionic-native/geolocation';
-import {CallNumber} from "@ionic-native/call-number";
-import {ServiceProvider} from "../../providers/service/service.service";
-import {AuthProvider} from "../../providers/auth/auth";
 import {Positions} from "../../models/positions";
 import { Events } from 'ionic-angular';
 
@@ -22,6 +17,7 @@ declare var google;
   templateUrl: 'mapa.html',
 })
 export class MapaPage {
+  cant_c: any;
   locations: Positions[] = []
   positions: Positions[] = [];
   infowindow = new google.maps.InfoWindow;
@@ -41,10 +37,10 @@ export class MapaPage {
   loggedIn: boolean;
   currentPosition: any;
 
-  constructor(public auth: AuthProvider, public servPro: ServiceProvider, private callNumber: CallNumber, private platform: Platform,
-              public navCtrl: NavController,
+  constructor(  private platform: Platform,
+
               public navParams: NavParams,
-              public modalCtrl: ModalController,
+
               private geolocation: Geolocation,public events: Events) {
 
     platform.ready().then(() => {
@@ -68,12 +64,17 @@ export class MapaPage {
   }
 
   ionViewDidLoad() {
-
+    this.service = this.navParams.get("service");
+    this.baseUrl = this.navParams.get("baseUrl");
+    this.cant_c = this.navParams.get("cant_c");
 
     this.response = this.navParams.get("response");
-    this.service = this.response['data'];
-    this.positions = this.response['positions'];
-    this.baseUrl = this.navParams.get("baseUrl");
+    // this.service = this.response['data'];
+
+    this.positions = this.service.positions;
+    // this.positions = this.response['positions'];
+
+
 
     this.geolocation.getCurrentPosition().then((resp) => {
       //agrgando los positions del servicio
@@ -159,25 +160,6 @@ export class MapaPage {
     });
   }
 
-  openRate() {
-    const profileModal = this.modalCtrl.create(RatePage);
-    profileModal.onDidDismiss(data => {
-      if (data.rate != "cancel")
-        this.servPro.rateservice(this.service.id, data.rate).then(
-          data => {
-            console.log(data);
-          });
-
-    });
-
-    profileModal.present();
-  }
-
-  Llamar(number) {
-    this.callNumber.callNumber(number, true)
-      .then(() => console.log('Launched dialer!'))
-      .catch(() => console.log('Error launching dialer'));
-  }
 
   loadMap() {
     let mapOptions = {

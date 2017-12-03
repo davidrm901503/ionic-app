@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import {  HttpClient } from "@angular/common/http";
+import {  HttpClient,  HttpHeaders } from "@angular/common/http";
+
 
 /*
   Generated class for the ApiProvider provider.
@@ -25,6 +26,22 @@ export class ApiProvider {
       6:"Sábado",
     }
   }
+
+  contactservice(id):Promise<any>{
+    let user =JSON.parse(localStorage.getItem('ServCurrentUser')) ;
+    if (user){
+    return this.http.get(this.apiBaseUrl + 'api/contactservice/'+id,{
+      headers: new HttpHeaders().set('Authorization', user.token)
+     })
+      .toPromise()
+      .then(
+        (response) => {
+          return response;
+        }
+      ).catch(this.handleError);
+    }
+  }
+
   test():Promise<any>{
     return this.http.get(this.apiBaseUrl + 'api/test')
       .toPromise()
