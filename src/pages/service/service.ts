@@ -7,6 +7,7 @@ import { MapaPage } from "../mapa/mapa";
 import { AuthProvider } from "../../providers/auth/auth";
 import { GaleriaPage } from "../galeria/galeria";
 import { ComentariosPage } from "../comentarios/comentarios";
+import { Service } from '../../models/service';
 
 @IonicPage()
 @Component({
@@ -15,8 +16,8 @@ import { ComentariosPage } from "../comentarios/comentarios";
 })
 export class ServicePage {
   response: Object;
-  private service: any = {};
-  private passedService: any = {};
+  private service: Service;
+  private passedService: Service;
   private baseUrl: any;
   cant_c :number;
   loggedIn: boolean;

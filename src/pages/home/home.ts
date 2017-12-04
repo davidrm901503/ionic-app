@@ -177,16 +177,16 @@ export class HomePage {
     this.navCtrl.push(CategoriesPage)
   }
   openServicesPage(id){
-    this.api.test().then(
-      () => {
+    // this.api.test().then(
+    //   () => {
         this.navCtrl.push(ServicesPage,{
           subCatId:id
         });
-      },
-      (err: HttpErrorResponse) => {
-        // no hay conexion
-          this.connetionDown = true;
-      });
+      // },
+      // (err: HttpErrorResponse) => {
+      //   // no hay conexion
+      //     this.connetionDown = true;
+      // });
 
   }
   reConnect(){

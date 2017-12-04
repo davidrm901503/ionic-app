@@ -85,8 +85,8 @@ import { PhotoViewer } from '@ionic-native/photo-viewer';
     HttpClientModule,
     IonicModule.forRoot(MyApp,{
       scrollPadding: false,
-      scrollAssist: true,
-      autoFocusAssist: false
+      scrollAssist: false, //estaba true
+      // autoFocusAssist: false
     })
   ],
   bootstrap: [IonicApp],
