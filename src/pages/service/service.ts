@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage,NavParams,ModalController,NavController, Events} from "ionic-angular";
 import  {ServiceProvider} from  '../../providers/service/service.service';
 import { ApiProvider } from "../../providers/api/api";
-import { RatePage } from "../rate/rate";
 import { InfoPage } from "../info/info";
 import { MapaPage } from "../mapa/mapa";
 import { AuthProvider } from "../../providers/auth/auth";
@@ -30,9 +29,9 @@ export class ServicePage {
     public navCtrl: NavController,
     public events: Events
    ) {
-
+    this.passedService = this.navParams.get("service");
       // si recibo el id del servicio
-      this.servPro.getService(this.navParams.get("serviceId")).then(data=> {
+        this.servPro.getService(this.navParams.get("serviceId")).then(data=> {
         this.response = data;
         this.service = data['data'];
       });
@@ -42,8 +41,7 @@ export class ServicePage {
   ionViewDidLoad() {
     this.loggedIn = this.auth.isLoggedIn();
     this.baseUrl = this.api.getbaseUrl();
-   this.passedService = this.navParams.get("service");
-   this.cant_c=this.passedService.servicecommentsList.length  ? this.passedService.servicecommentsList.length : 0
+    this.cant_c=this.passedService.servicecommentsList.length  ? this.passedService.servicecommentsList.length : 0
   }
   ionViewDidEnter() {
 
@@ -53,19 +51,6 @@ export class ServicePage {
 
     });
   }
-  // openRate(){
-  //   const profileModal = this.modalCtrl.create(RatePage,{rated:this.passedService.rated});
-  //   profileModal.onDidDismiss(data => {
-  //     if(data.rate !== "cancel")
-  //     this.servPro.rateservice(this.service.id,data.rate).then(
-  //       data => {
-  //         this.passedService.globalrate = data['data'].globalrate;
-  //         this.passedService.rated =data['data'].rated;;
-  //       });
-  //   });
-
-  //   profileModal.present();
-  // }
 
   openInfo(){
       this.navCtrl.push(InfoPage,{

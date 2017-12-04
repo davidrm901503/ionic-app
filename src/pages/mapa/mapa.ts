@@ -6,7 +6,7 @@ import {
 } from "ionic-angular";
 
 import {Geolocation} from '@ionic-native/geolocation';
-import {Positions} from "../../models/positions";
+import {Position} from "../../models/position";
 import { Events } from 'ionic-angular';
 
 declare var google;
@@ -18,8 +18,8 @@ declare var google;
 })
 export class MapaPage {
   cant_c: any;
-  locations: Positions[] = []
-  positions: Positions[] = [];
+  locations: Position[] = []
+  positions: Position[] = [];
   infowindow = new google.maps.InfoWindow;
   response: any;
   latLng: any;

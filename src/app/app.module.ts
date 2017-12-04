@@ -25,8 +25,8 @@ import { InfoPage } from "../pages/info/info";
 import { MapaPage } from "../pages/mapa/mapa";
 import { GaleriaPage } from "../pages/galeria/galeria";
 import { ComentariosPage } from "../pages/comentarios/comentarios";
-import { ForgotPage } from "../pages/forgot/forgot";
 import { Create1Page } from "../pages/create1/create1";
+import { Create2Page } from "../pages/create2/create2";
 
 
 // Componentes
@@ -67,7 +67,6 @@ import { PhotoViewer } from '@ionic-native/photo-viewer';
     BusquedaPage,
     MyservicesPage,
     ServicePage,
-    ForgotPage,
     RatePage,
     IonRating,
     ServUpInfoComponent,
@@ -76,6 +75,7 @@ import { PhotoViewer } from '@ionic-native/photo-viewer';
     GaleriaPage,
     ComentariosPage,
     Create1Page,
+    Create2Page,
     EjemploPage
 
   ],
@@ -83,7 +83,11 @@ import { PhotoViewer } from '@ionic-native/photo-viewer';
     BrowserModule,
     HttpModule,
     HttpClientModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp,{
+      scrollPadding: false,
+      scrollAssist: true,
+      autoFocusAssist: false
+    })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -100,7 +104,6 @@ import { PhotoViewer } from '@ionic-native/photo-viewer';
     BusquedaPage,
     MyservicesPage,
     ServicePage,
-    ForgotPage,
     RatePage,
     IonRating,
     InfoPage,
@@ -108,6 +111,7 @@ import { PhotoViewer } from '@ionic-native/photo-viewer';
     GaleriaPage,
     ComentariosPage,
     Create1Page,
+    Create2Page,
     EjemploPage
 
   ],

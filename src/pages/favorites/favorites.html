@@ -1,5 +1,11 @@
 <ion-header>
-    <app-header> </app-header>
+
+    <ion-navbar>
+        <ion-title text-center>
+            LOGO
+        </ion-title>
+    </ion-navbar>
+
 </ion-header>
 
 
@@ -22,18 +28,28 @@
 
                         <ion-col col-8>
                             <h2 class="azul-claro">{{serv.title }} </h2>
-                            <div class="text-center fw-600 serv-pro">
-                                <p class="texto" style>PRO</p>
-                            </div>
                             <hr class="hr-separador">
                             <ion-row>
                                 <ion-col>
-
                                     <p>Calificación: {{serv.globalrate}}/10</p>
                                     <p>Distancia: 5 km</p>
-                                    <p>Categoria: Hogar</p>
                                 </ion-col>
 
+                            </ion-row>
+                            <ion-row>
+                                <ion-col col-auto>
+                                    <p> Categoria:</p>
+                                </ion-col>
+                                <ion-col col-auto>
+                                    <p *ngFor="let cat of serv.subcategoriesList; let i = index">
+                                        <ng-container *ngIf="i > 0; else elseTemplate">
+                                            ,{{ cat.title}}
+                                        </ng-container>
+                                        <ng-template #elseTemplate>
+                                            {{ cat.title}}
+                                        </ng-template>
+                                    </p>
+                                </ion-col>
                             </ion-row>
                         </ion-col>
 
@@ -41,8 +57,8 @@
 
                     <ion-row>
                         <ion-col col-12>
-                            <button ion-button full color="azul-claro" (tap)='openServicePage(serv.id)'>
-                      <ion-icon name="checkmark"></ion-icon>&nbsp;Visualizar
+                            <button ion-button full color="azul-claro" (tap)='openServicePage(serv.id,serv)'>
+                      <ion-icon name="checkmark"></ion-icon>&nbsp;Ver detalle
                     </button>
                         </ion-col>
 

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, LoadingController,Events,IonicPage, Platform} from 'ionic-angular';
+import { NavController, LoadingController,Events, Platform} from 'ionic-angular';
 
 import  {ServiceProvider} from  '../../providers/service/service.service';
 import { HttpErrorResponse } from "@angular/common/http";
@@ -45,9 +45,10 @@ export class FavoritesPage {
     });
   }
 
-  openServicePage(id) {
+  openServicePage(id,serv) {
     this.navCtrl.push(ServicePage, {
-      serviceId: id
+      serviceId: id,
+      service:serv
     });
   }
   delete(id){

@@ -6,6 +6,7 @@ import {ServicePage} from "../service/service";
 import {HttpErrorResponse} from "@angular/common/http";
 import {ApiProvider} from "../../providers/api/api";
 import {PhotoViewer} from '@ionic-native/photo-viewer';
+import { Service } from '../../models/service';
 
 @IonicPage()
 @Component({
@@ -22,7 +23,7 @@ export class ServicesPage {
   city: any;
   category: any;
   subCatId: any;
-  services: any[]=[];
+  services: Service[]=[];
   categoryId: any;
   baseUrl: any;
   loggedIn: boolean;

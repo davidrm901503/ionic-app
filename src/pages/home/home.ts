@@ -146,10 +146,10 @@ export class HomePage {
     this.busqueda = false;
     this.noFound =  false;
   }
-  openServicePage(id){
+  openServicePage(id,serv){
     this.navCtrl.push(ServicePage,{
-       serviceId:id
-      // serviceId:this.services[id]
+       serviceId:id,
+       service:serv
     })
   }
 

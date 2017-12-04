@@ -22,30 +22,33 @@
                     <ion-grid>
                         <ion-row>
                             <ion-col col-4>
-                                <!-- <ion-thumbnail item-start> -->
-                                <ng-container *ngIf="serv.icon; else imgTemplate">
-                                    <img (tap)="viewImg(serv.icon)" src="{{baseUrl + serv.icon}}">
-                                </ng-container>
-                                <ng-template #imgTemplate>
-                                    <img (tap)="viewImg('assets/imgs/service_img.png')" src="assets/imgs/service_img.png">
-                                </ng-template>
-                                <!-- </ion-thumbnail> -->
+                                <img (tap)="viewImg(serv.icon)" [src]="serv.icon ? baseUrl + serv.icon : 'assets/imgs/service_img.png' ">
                             </ion-col>
 
                             <ion-col col-8>
                                 <h2 class="serv-title ">{{serv.title }} </h2>
-                                <div class="text-center fw-600 serv-pro">
-                                    <p class="texto" style>PRO</p>
-                                </div>
+
                                 <hr class="hr-separador">
                                 <ion-row>
                                     <ion-col>
-
                                         <p>Calificación: {{serv.globalrate}}/10</p>
                                         <p>Distancia: 5 km</p>
-                                        <p>Categoria: Hogar</p>
                                     </ion-col>
-
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col col-auto>
+                                        <p> Categoria:</p>
+                                    </ion-col>
+                                    <ion-col col-auto>
+                                        <p *ngFor="let cat of serv.subcategoriesList; let i = index">
+                                            <ng-container *ngIf="i > 0; else elseTemplate">
+                                                ,{{ cat.title}}
+                                            </ng-container>
+                                            <ng-template #elseTemplate>
+                                                {{ cat.title}}
+                                            </ng-template>
+                                        </p>
+                                    </ion-col>
                                 </ion-row>
                             </ion-col>
 
@@ -53,8 +56,8 @@
 
                         <ion-row>
                             <ion-col col-12>
-                                <button ion-button full color="azul-claro" (tap)='openServicePage(serv.id)'>
-                  <ion-icon name="checkmark"></ion-icon>&nbsp;Visualizar
+                                <button ion-button full color="azul-claro" (tap)='openServicePage(serv.id,serv)'>
+                  <ion-icon name="checkmark"></ion-icon>&nbsp;Ver detalle
                 </button>
                             </ion-col>
 

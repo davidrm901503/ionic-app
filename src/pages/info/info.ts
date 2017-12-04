@@ -18,7 +18,7 @@ export class InfoPage {
   private service: any = {};
   private baseUrl: any;
   cant_c:any;
-	serviceDays: string = "";
+	serviceDays: string="";
   days : object = {
    0:"Domingo",
    1:"Lunes",
@@ -38,14 +38,17 @@ export class InfoPage {
     this.baseUrl = this.navParams.get("baseUrl");
     this.cant_c = this.navParams.get("cant_c");
 
+    if (this.service['week_days']) {
+
 
     let tempD=  this.service['week_days'].split(',');
 
-    for (var index = 0; index < tempD.length; index++) {
-      if( index > 0)
-       this.serviceDays += ", "+this.days[tempD[index]];
-      else
-        this.serviceDays += this.days[tempD[index]];
+      for (var index = 0; index < tempD.length; index++) {
+        if( index > 0)
+        this.serviceDays += ", "+this.days[tempD[index]];
+        else
+          this.serviceDays += this.days[tempD[index]];
+      }
     }
   }
 

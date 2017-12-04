@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild  } from '@angular/core';
 import {
   IonicPage,
   ModalController,
@@ -6,10 +6,10 @@ import {
   LoadingController,
   ToastController,
   AlertController
+
 } from "ionic-angular";
 import {User} from '../../models/user';
 import {AuthProvider} from '../../providers/auth/auth';
-import { ForgotPage } from "../forgot/forgot";
 import { HomePage } from '../home/home';
 
 @IonicPage()
@@ -26,10 +26,13 @@ export class LoginPage {
      public authService: AuthProvider ,
      public toastCtrl: ToastController,
      public load: LoadingController,
-     public modalCtrl: ModalController,
      public alertCtrl: AlertController) {
     this.user = new User();
+
+
   }
+
+
   showPrompt() {
     let prompt = this.alertCtrl.create({
       title: 'Olvido de contraseña',
@@ -136,17 +139,6 @@ llenarCampos(){
     });
     toast.present();
 }
-openForgot(){
-  const profileModal = this.modalCtrl.create(ForgotPage);
-  profileModal.onDidDismiss(data => {
-
-  });
-
-  profileModal.present();
-}
-
-
-
 
 }
 

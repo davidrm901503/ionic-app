@@ -1,6 +1,13 @@
 <ion-header>
-    <app-header> </app-header>
+
+    <ion-navbar>
+        <ion-title text-center>
+            LOGO
+        </ion-title>
+    </ion-navbar>
+
 </ion-header>
+
 <ion-content padding>
     <serv-up-info [passedService]="passedService" [cant_c]="cant_c" (rateService)="rateService($event)"></serv-up-info>
 

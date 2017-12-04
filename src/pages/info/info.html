@@ -16,25 +16,49 @@
     <p text-wrap>{{service.description}}</p>
     <ion-grid>
         <ion-row>
-            <ion-col col-12>
-                <ion-icon class="fs-35" name="calendar" color="azul-claro"></ion-icon>
-                <ion-label class="fs-15 info-label" text-wrap color="azul-claro">{{serviceDays}}</ion-label>
+            <ion-col col-12 *ngIf="serviceDays">
+                <ion-row align-items-center>
+                    <ion-col col-1>
+                        <ion-icon class="fs-35" name="calendar" color="azul-claro"></ion-icon>
+                    </ion-col>
+                    <ion-col col-11>
+                        <ion-label class="fs-15 info-label" text-wrap color="azul-claro">{{serviceDays}}</ion-label>
+                    </ion-col>
+                </ion-row>
             </ion-col>
 
 
-            <ion-col col-12>
-                <ion-icon class="fs-35" name="time" color="azul-claro"></ion-icon>
-                <ion-label class="fs-15 info-label" text-wrap color="azul-claro">Desde {{service.start_time}} hasta {{service.end_time}}</ion-label>
+            <ion-col col-12 *ngIf="service.start_time">
+                <ion-row align-items-center>
+                    <ion-col col-1>
+                        <ion-icon class="fs-35" name="time" color="azul-claro"></ion-icon>
+                    </ion-col>
+                    <ion-col col-11>
+                        <ion-label class="fs-15 info-label" text-wrap color="azul-claro">Desde {{service.start_time}} hasta {{service.end_time}}</ion-label>
+                    </ion-col>
+                </ion-row>
             </ion-col>
 
-            <ion-col col-12>
-                <ion-icon class="fs-35" name="at" color="azul-claro"></ion-icon>
-                <ion-label class="fs-15 info-label" text-wrap color="azul-claro">{{service.email}}</ion-label>
+            <ion-col col-12 *ngIf="service.email">
+                <ion-row align-items-center>
+                    <ion-col col-1>
+                        <ion-icon class="fs-35" name="at" color="azul-claro"></ion-icon>
+                    </ion-col>
+                    <ion-col col-11>
+                        <ion-label class="fs-15 info-label" text-wrap color="azul-claro">{{service.email}}</ion-label>
+                    </ion-col>
+                </ion-row>
             </ion-col>
 
-            <ion-col col-12>
-                <ion-icon class="fs-35" name="globe" color="azul-claro"></ion-icon>
-                <ion-label class="fs-15 info-label" text-wrap color="azul-claro">{{service.url}}</ion-label>
+            <ion-col col-12 *ngIf="service.url">
+                <ion-row align-items-center>
+                    <ion-col col-1>
+                        <ion-icon class="fs-35" name="globe" color="azul-claro"></ion-icon>
+                    </ion-col>
+                    <ion-col col-11>
+                        <ion-label class="fs-15 info-label" text-wrap color="azul-claro">{{service.url}}</ion-label>
+                    </ion-col>
+                </ion-row>
             </ion-col>
         </ion-row>
     </ion-grid>
