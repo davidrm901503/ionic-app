@@ -42,7 +42,7 @@ import { AuthProvider } from '../providers/auth/auth';
 import { ApiProvider } from '../providers/api/api';
 
 // native
-import { FileTransfer  } from '@ionic-native/file-transfer';
+
 import { File } from '@ionic-native/file';
 import { Camera } from '@ionic-native/camera';
 import { CallNumber } from "@ionic-native/call-number";
@@ -124,7 +124,7 @@ import { Create4Page } from '../pages/create4/create4';
   providers: [
     StatusBar,
     SplashScreen,
-    FileTransfer,
+   
     File,
     Camera,
     CallNumber,

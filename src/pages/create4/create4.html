@@ -6,13 +6,51 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>create4</ion-title>
-  </ion-navbar>
+    <ion-navbar hideBackButton>
+        <ion-title>create4</ion-title>
+    </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+    <h4 class="azul-claro">Crear Anuncio <small style="color: rgb(90, 84, 84)">Ubicaciones</small></h4>
+    <div #map id="map"></div>
+    <ion-item>
+        <ion-label stacked>Título<span class="requerido"><sup>*</sup></span></ion-label>
+        <ion-input name="title" [(ngModel)]="titulo" placeholder="Título ..."></ion-input>
+    </ion-item>
+    <button [disabled]="!titulo && !longitude" (click)="addPosition()" color="pronto-gris" ion-button block margin-bottom="1" margin-top="2">
+       Agregar ubicación
+      </button>
+    <ion-list>
+        <ion-item *ngFor="let item of positions; let i =index;">
+            <ion-icon name="pin"></ion-icon>
+            <h5> {{item.title}}</h5>
+            <button (click)="deletePosition(i)" class="fs-25" color="danger" ion-button icon-only item-end>
+          <ion-icon   name="close"></ion-icon>
+        </button>
+        </ion-item>
+    </ion-list>
+    <ion-grid>
+        <ion-row>
+            <ion-col col-6>
+                <button block color="azul-claro" (click)="goToCreate3()" ion-button icon-start>
+                        <ion-icon name="arrow-round-back"></ion-icon>
+                        Anterior
 
+
+                        </button>
+            </ion-col>
+            <ion-col col-6>
+                <button block color="azul-oscuro" (click)="crearService()" ion-button icon-start>
+
+                              <ion-icon name="arrow-round-forward"></ion-icon>
+                              Finalizar
+
+                            </button>
+            </ion-col>
+
+        </ion-row>
+    </ion-grid>
 </ion-content>

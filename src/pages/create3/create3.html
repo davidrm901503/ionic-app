@@ -19,24 +19,12 @@
         <div class="circle"> <span class="label">4</span>
         </div>
     </div>
+    {{tempDay}}
     <form #formu="ngForm">
         <ion-item>
-            <ion-label stacked>Teléfono adicional</ion-label>
-            <ion-input type="tel" name="other_phone" [(ngModel)]="service.other_phone" placeholder="Teléfono adicional ..." required></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label stacked>Correo electrónico</ion-label>
-            <ion-input type="email" name="email" [(ngModel)]="service.email" placeholder="Correo electrónico..."></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label stacked>Dirección web</ion-label>
-            <ion-input name="web" [(ngModel)]="service.url" placeholder="Dirección web..."></ion-input>
-
-        </ion-item>
-        <ion-item>
             <ion-label>Días de atención</ion-label>
-            <ion-select multiple="true" name="days" [(ngModel)]="service.week_days" placeholder="Seleccione">
-                <ion-option *ngFor="let item of week_days" [value]="item.value">{{item.title}}</ion-option>
+            <ion-select multiple="true" name="days" [(ngModel)]="tempDay" placeholder="Seleccione">
+                <ion-option *ngFor="let item of week_days; let pos = index;" [value]="item.value">{{item.title}}</ion-option>
             </ion-select>
         </ion-item>
         <ion-item no-lines>
@@ -45,19 +33,33 @@
         </ion-item>
         <ion-item no-lines>
             <ion-label fixed>Desde</ion-label>
-            <ion-datetime name="start_time" [(ngModel)]="service.start_time" block displayFormat="HH:mm"></ion-datetime>
+            <ion-datetime placeholder="Hora de inicio" name="start_time" [(ngModel)]="service.start_time" block displayFormat="HH:mm"></ion-datetime>
         </ion-item>
         <ion-item>
             <ion-label fixed>Hasta</ion-label>
-            <ion-datetime name="end_time" [(ngModel)]="service.end_time" displayFormat="HH:mm"></ion-datetime>
+            <ion-datetime placeholder="Hora de inicio" name="end_time" [(ngModel)]="service.end_time" displayFormat="HH:mm"></ion-datetime>
 
         </ion-item>
+        <ion-item>
+            <ion-label stacked>Teléfono adicional</ion-label>
+            <ion-input type="tel" name="other_phone" [(ngModel)]="service.other_phone" placeholder="Teléfono adicional ..."></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label stacked>Correo electrónico</ion-label>
+            <ion-input type="email" name="email" [(ngModel)]="service.email" placeholder="Correo electrónico..."></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label stacked>Dirección web</ion-label>
+            <ion-input type="url" name="web" [(ngModel)]="service.url" placeholder="Dirección web..."></ion-input>
+
+        </ion-item>
+
 
     </form>
     <ion-grid>
         <ion-row>
             <ion-col col-6>
-                <button block color="azul-claro" (tap)="goToCreate2()" ion-button icon-start>
+                <button block color="azul-claro" (click)="goToCreate2()" ion-button icon-start>
                         <ion-icon name="arrow-round-back"></ion-icon>
                         Anterior
 
@@ -65,7 +67,7 @@
                         </button>
             </ion-col>
             <ion-col col-6>
-                <button block color="azul-oscuro" (tap)="goToCreate4()" ion-button icon-start>
+                <button [disabled]="!formu.form.valid" block color="azul-oscuro" (click)="goToCreate4()" ion-button icon-start>
 
                               <ion-icon name="arrow-round-forward"></ion-icon>
                               Siguiente

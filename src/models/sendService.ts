@@ -1,13 +1,18 @@
+import { Imagen } from "./Imagen";
+
 
 export class sendGalery{
+  id?:any;
+  title?:any;
   filename:string;
   filetype:string;
   value	:string;
+
 }
 export class sendPositions{
-  title:string;
-  longitude:number;
-  latitude	:number;
+  title: string;
+  latitude: any;
+  longitude: any;
 }
 export class sendService {
   title	: string;
@@ -20,11 +25,14 @@ export class sendService {
   start_time: string;
   end_time: string;
   other_phone: any;
-  galery:sendGalery[];
+  gallery:sendGalery[];
   positions:sendPositions[];
-  week_days:boolean[];
+  // week_days:string | boolean[];
+   week_days:any;
   cities:number[];
+  dropsImages: any[];
   categories:number[];
+  imagesList	:Imagen[];
   icon:sendGalery;
 
 

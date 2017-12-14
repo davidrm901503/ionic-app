@@ -26,11 +26,32 @@ export class Create3Page {
     {title: 'Sabado', value: 5},
     {title: 'Domingo', value: 6},
 ];
+  tempDay:any[];
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+    //this.tempDay= this.navParams.get("service")['week_days'].split(',');
     this.service =this.navParams.get("service");
+    this.tempDay = [];
+
   }
 
   ionViewDidLoad() {
+
+    if(this.navParams.get("service").id){
+      // this.edit=true;
+      let daysId = this.service.week_days.split(',');
+      // console.log(this.service.week_days);
+      // this.service.week_days = [false, false, false, false, false, false, false];
+      this.service.week_days = [false, false, false, false, false, false, false];
+      for (let i = 0; i < daysId.length; i++) {
+          this.tempDay.push([daysId[i]]);
+      }
+
+    }
+    else{
+
+      this.service.week_days = [false, false, false, false, false, false, false];
+    }
+
 
   }
   goToCreate2(){
@@ -38,6 +59,10 @@ export class Create3Page {
   }
   goToCreate4(){
 
+    // llenar los dias
+    for (let value of this.tempDay) {
+      this.service.week_days[value] = true;
+    }
       this.navCtrl.push(Create4Page, {
         service: this.service
       });

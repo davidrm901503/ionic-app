@@ -27,11 +27,9 @@ export class MapaPage {
   directionsDisplay = new google.maps.DirectionsRenderer;
   distanceM = new google.maps.DistanceMatrixService();
   // distanceMatrix = new google.maps.DistanceMatrixService;
- pepe:any;
   @ViewChild('map') mapElement: ElementRef;
   map: any;
   private service: any = {};
-  private baseUrl: any;
   // latitude:any
   // longitude:any;
   loggedIn: boolean;
@@ -44,11 +42,6 @@ export class MapaPage {
               private geolocation: Geolocation,public events: Events) {
 
     platform.ready().then(() => {
-      events.subscribe('user:created', (user, time) => {
-        // user and time are the same arguments passed in `events.publish(user, time)`
-        console.log('Welcome', user, 'at', time);
-      });
-
       // // get current position
       // geolocation.getCurrentPosition().then(pos => {
       //   this.currentPosition = pos;
@@ -65,7 +58,6 @@ export class MapaPage {
 
   ionViewDidLoad() {
     this.service = this.navParams.get("service");
-    this.baseUrl = this.navParams.get("baseUrl");
     this.cant_c = this.navParams.get("cant_c");
 
     this.response = this.navParams.get("response");
@@ -117,7 +109,7 @@ export class MapaPage {
   showDistance(event) {
      return function(response, status) {
       if(status == "OK"){
-        event.publish('user:created', "user", Date.now());
+
         for (let i = 0; i < response.rows[0].elements.length; i++) {
           var el = document.getElementById('pos'+i);
           el.innerHTML = ":"+response.rows[0].elements[i].distance.text;

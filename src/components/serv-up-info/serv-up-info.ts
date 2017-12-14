@@ -14,7 +14,6 @@ import { Service } from '../../models/service';
 })
 export class ServUpInfoComponent {
 	@Input() passedService:Service;
-  baseUrl: any;
   loggedIn: boolean;
   @Input() cant_c :number = 0;
   @Output() rateService: EventEmitter<any> = new EventEmitter<any>();
@@ -29,9 +28,8 @@ export class ServUpInfoComponent {
   }
   ngAfterViewInit(){
     this.loggedIn = this.auth.isLoggedIn();
-    this.baseUrl = this.api.getbaseUrl();
   }
-  Llamar(number,id){
+  Llamar(number){
 
     this.callNumber.callNumber(number, true)
     .then(() => {
@@ -55,7 +53,7 @@ export class ServUpInfoComponent {
   }
   viewImg(img) {
     this.platform.ready().then(() => {
-    this.photoViewer.show(this.baseUrl + img);
+    this.photoViewer.show( img);
     });
   }
 
