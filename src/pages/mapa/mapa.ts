@@ -27,6 +27,7 @@ export class MapaPage {
   directionsService = new google.maps.DirectionsService;
   directionsDisplay = new google.maps.DirectionsRenderer;
   distanceM = new google.maps.DistanceMatrixService();
+  destino:any;
   // distanceMatrix = new google.maps.DistanceMatrixService;
   @ViewChild('map') mapElement: ElementRef;
   map: any;
@@ -42,16 +43,6 @@ export class MapaPage {
               private geolocation: Geolocation,public events: Events) {
 
     platform.ready().then(() => {
-      // // get current position
-      // geolocation.getCurrentPosition().then(pos => {
-      //   this.currentPosition = pos;
-      //   // this.longitude = pos.coords.longitude;
-      //   this.latLng = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
-      //   this.loadMap();
-      // });
-      // const watch = geolocation.watchPosition().subscribe(pos => {
-      //   this.currentPosition = pos;
-      // });
 
     });
   }
@@ -61,19 +52,12 @@ export class MapaPage {
     this.cant_c = this.navParams.get("cant_c");
 
     this.response = this.navParams.get("response");
-    // this.service = this.response['data'];
-
     this.positions = this.service.positions;
-    // this.positions = this.response['positions'];
-
-
 
     this.geolocation.getCurrentPosition().then((resp) => {
       //agrgando los positions del servicio
       this.loadMap();
-
-      // this.latitude=resp.coords.latitude;
-      // this.longitude =resp.coords.longitude
+      //agregando el current
       this.latLng = new google.maps.LatLng(resp.coords.latitude, resp.coords.longitude);
       this.map.setCenter(this.latLng);
       this.map.setZoom(15);
@@ -85,13 +69,7 @@ export class MapaPage {
       let content = "<h4>Mi posición</h4>";
       this.addInfoWindow(this.currentP, content);
 
-
-      // para calcular la distancia
-      //  let destino1 = new google.maps.LatLng(23.126606, -82.32528);
-
       var destinos = [];
-      //  destinos.push(destino1);
-
       for (let i = 0; i < this.positions.length; i++) {
         destinos.push(new google.maps.LatLng(this.positions[i].latitude,this.positions[i].longitude));
       }
@@ -106,9 +84,6 @@ export class MapaPage {
 
     let watch = this.geolocation.watchPosition();
     watch.subscribe((data) => {
-     // data can be a set of coordinates, or an error (if an error occurred).
-     // data.coords.latitude
-     // data.coords.longitude
 
      this.latLng = new google.maps.LatLng(data.coords.latitude, data.coords.longitude);
      this.map.setCenter(this.latLng);
@@ -125,7 +100,12 @@ export class MapaPage {
         travelMode: 'DRIVING'
       },this.showDistance(this.events));
 
+      if (this.destino !== undefined) {
+        this.calculateAndDisplayRoute(this.destino);
+      }
+
     });
+
 
   }
 
@@ -141,32 +121,18 @@ export class MapaPage {
       } else {
           alert("Error: " + status);
       }
-    // }
-    // let asd = [];
-    // for (let i = 0; i < response.rows[0].elements.length; i++) {
-    //  // this.positions[i].distance = response.rows[0].elements[i];
-    //   console.log(response.rows[0].elements[i]);
-    //   asd.push(response.rows[0].elements[i]);
-    //  // this.prueba(asd);
-    // }
-    // console.log(this.positions);
   }
 }
 
-  prueba(a){
-    console.log(a);
-
-  }
-
   // mostrar ruta entre 2 puntos
   calculateAndDisplayRoute(p) {
+    this.destino=p;
     var end = new google.maps.LatLng(p.latitude, p.longitude);
     this.directionsService.route({
       origin: this.latLng,
       destination: end,
       travelMode: 'DRIVING'
     }, (response, status) => {
-      console.log(status);
       if (status === 'OK') {
         this.directionsDisplay.setDirections(response);
       } else {
