@@ -3,7 +3,6 @@ import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-an
 import { sendService } from '../../models/sendService';
 import { ServiceProvider } from '../../providers/service/service.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import {Geolocation} from '@ionic-native/geolocation';
 import {Position} from "../../models/position";
 import { ServicesPage } from '../services/services';
 import { HomePage } from '../home/home';
