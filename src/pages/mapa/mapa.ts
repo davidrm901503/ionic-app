@@ -17,6 +17,7 @@ declare var google;
   templateUrl: 'mapa.html',
 })
 export class MapaPage {
+  currentP: any;
   cant_c: any;
   locations: Position[] = []
   positions: Position[] = [];
@@ -33,7 +34,6 @@ export class MapaPage {
   // latitude:any
   // longitude:any;
   loggedIn: boolean;
-  currentPosition: any;
 
   constructor(  private platform: Platform,
 
@@ -77,13 +77,13 @@ export class MapaPage {
       this.latLng = new google.maps.LatLng(resp.coords.latitude, resp.coords.longitude);
       this.map.setCenter(this.latLng);
       this.map.setZoom(15);
-      let marker = new google.maps.Marker({
+      this.currentP = new google.maps.Marker({
         map: this.map,
-        // icon: "http://localhost/login/resources/image/categories/current.png",
+         icon: "http://www.googlemapsmarkers.com/v1/009900/",
         position: this.latLng
       });
       let content = "<h4>Mi posición</h4>";
-      this.addInfoWindow(marker, content);
+      this.addInfoWindow(this.currentP, content);
 
 
       // para calcular la distancia
@@ -101,6 +101,29 @@ export class MapaPage {
           destinations: destinos,
           travelMode: 'DRIVING'
         },this.showDistance(this.events));
+
+    });
+
+    let watch = this.geolocation.watchPosition();
+    watch.subscribe((data) => {
+     // data can be a set of coordinates, or an error (if an error occurred).
+     // data.coords.latitude
+     // data.coords.longitude
+
+     this.latLng = new google.maps.LatLng(data.coords.latitude, data.coords.longitude);
+     this.map.setCenter(this.latLng);
+     this.map.setZoom(15);
+     this.currentP.setPosition(this.latLng);
+     var destinos = [];
+     for (let i = 0; i < this.positions.length; i++) {
+      destinos.push(new google.maps.LatLng(this.positions[i].latitude,this.positions[i].longitude));
+    }
+     this.distanceM.getDistanceMatrix(
+      {
+        origins: [this.latLng],
+        destinations: destinos,
+        travelMode: 'DRIVING'
+      },this.showDistance(this.events));
 
     });
 
