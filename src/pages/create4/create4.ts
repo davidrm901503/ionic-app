@@ -19,6 +19,7 @@ declare var google;
   templateUrl: 'create4.html',
 })
 export class Create4Page {
+  edit: boolean;
   distanceM: any;
   directionsDisplay: any;
   directionsService: any;
@@ -47,6 +48,7 @@ export class Create4Page {
     this.service.positions=[];
     this.markers = new Array();
     if(this.navParams.get("service").id){
+      this.edit=true;
      this.positions = this.navParams.get("service").positionsList;
     }
     if (typeof google !== 'undefined') {

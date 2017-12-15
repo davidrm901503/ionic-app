@@ -7,14 +7,25 @@
 <ion-header>
 
     <ion-navbar hideBackButton>
-        <ion-title>create4</ion-title>
+        <ion-title text-center>LOGO</ion-title>
     </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-    <h4 class="azul-claro">Crear Anuncio <small style="color: rgb(90, 84, 84)">Ubicaciones</small></h4>
+    <h4 class="azul-claro">{{edit ? 'Editar Anuncio': 'Crear Anuncio' }} <small style="color: rgb(90, 84, 84)">Ubicaciones</small></h4>
+    <div class="progress">
+        <div class="circle done"> <span class="label">1</span>
+        </div> <span class="bar  "></span>
+        <div class="circle done "> <span class="label">2</span>
+        </div> <span class="bar "></span>
+        <div class="circle done"> <span class="label">3</span>
+        </div> <span class="bar"></span>
+        <div class="circle active"> <span class="label">4</span>
+        </div>
+    </div>
+    <hr class="hr-separador">
     <div #map id="map"></div>
     <ion-item>
         <ion-label stacked>Título<span class="requerido"><sup>*</sup></span></ion-label>

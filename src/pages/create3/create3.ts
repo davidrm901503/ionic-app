@@ -16,6 +16,7 @@ import { sendService } from '../../models/sendService';
   templateUrl: 'create3.html',
 })
 export class Create3Page {
+  edit: boolean;
   service: sendService;
   week_days = [
     {title: 'Lunes', value: 0},
@@ -37,7 +38,7 @@ export class Create3Page {
   ionViewDidLoad() {
 
     if(this.navParams.get("service").id){
-      // this.edit=true;
+      this.edit=true;
       let daysId = this.service.week_days.split(',');
       // console.log(this.service.week_days);
       // this.service.week_days = [false, false, false, false, false, false, false];
