@@ -13,8 +13,8 @@ import { PopoverPage } from '../pages/pop-over/pop-over';
 import { CategoriesPage } from '../pages/categories/categories';
 import { SubcategoriesPage } from '../pages/subcategories/subcategories';
 import { ServicesPage } from '../pages/services/services';
-import { LoginPage  } from '../pages/login/login';
-import { SignupPage  } from '../pages/signup/signup';
+// import { LoginPage  } from '../pages/login/login';
+// import { SignupPage  } from '../pages/signup/signup';
 import { FavoritesPage  } from '../pages/favorites/favorites';
 import { BusquedaPage  } from '../pages/busqueda/busqueda';
 import { MyservicesPage  } from '../pages/myservices/myservices';
@@ -51,9 +51,6 @@ import { Create3Page } from '../pages/create3/create3';
 import { Create4Page } from '../pages/create4/create4';
 import { PagarPage } from '../pages/pagar/pagar';
 
-// import { FilePath } from '@ionic-native/file-path';
-
-
 @NgModule({
   declarations: [
     MyApp,
@@ -62,16 +59,16 @@ import { PagarPage } from '../pages/pagar/pagar';
     CategoriesPage,
     SubcategoriesPage,
     AppHeaderComponent,
+    IonRating,
+    ServUpInfoComponent,
     ServicesPage,
-    LoginPage,
-    SignupPage,
+    // LoginPage,
+    // SignupPage,
     FavoritesPage,
     BusquedaPage,
     MyservicesPage,
     ServicePage,
     RatePage,
-    IonRating,
-    ServUpInfoComponent,
     InfoPage,
     MapaPage,
     GaleriaPage,
@@ -101,15 +98,16 @@ import { PagarPage } from '../pages/pagar/pagar';
     CategoriesPage,
     SubcategoriesPage,
     AppHeaderComponent,
+    IonRating,
+    ServUpInfoComponent,
     ServicesPage,
-    LoginPage,
-    SignupPage,
+    // LoginPage,
+    // SignupPage,z
     FavoritesPage,
     BusquedaPage,
     MyservicesPage,
-    ServicePage,
+     ServicePage,
     RatePage,
-    IonRating,
     InfoPage,
     MapaPage,
     GaleriaPage,

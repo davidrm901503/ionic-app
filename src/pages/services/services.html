@@ -1,5 +1,5 @@
 <ion-header>
-    <app-header> </app-header>
+    <app-header></app-header>
 </ion-header>
 
 
@@ -61,17 +61,28 @@
                         </div>
                         <hr class="hr-separador">
                         <ion-row>
-                            <ion-col col-7>
+                            <ion-col col-12>
 
-                                <p>Calificación: {{serv.globalrate}}/10</p>
+                                <!-- <p>Calificación: {{serv.globalrate}}/10</p> -->
                                 <p>Distancia: 5 km</p>
+                                <p text-wrap><span *ngFor="let cat of serv.subcategoriesList; let i = index">
+                                    <ng-container *ngIf="i > 0; else elseTemplate">
+                                       ,{{ cat.title}}
+                                    </ng-container>
+                                    <ng-template #elseTemplate>
+                                       {{ cat.title}}
+                                    </ng-template>
+                                 </span>
+                                </p>
+                                <ion-rating [readOnly]="true" [numStars]="5" [value]="serv.globalrate/2"></ion-rating>
+
                             </ion-col>
-                            <ion-col col-5>
+                            <!-- <ion-col col-5 style="margin-left: 10px;">
                                 <ion-icon float-right class="fs-40" (tap)="toogleFavorite(i,serv.id)" *ngIf="loggedIn" name="heart" [color]="serv.favorite ? 'favorite_on' : 'favorite_off'"></ion-icon>
-                            </ion-col>
+                            </ion-col> -->
                         </ion-row>
-                        <ion-row class="pt--12" no-padding>
-                            <ion-col col-5>
+                        <!-- <ion-row class="pt-12" no-padding>
+                             <ion-col col-5 style="margin-left: -10px;">
                                 <p> Categoria:</p>
                             </ion-col>
                             <ion-col col-7>
@@ -85,7 +96,8 @@
                              </span>
                                 </p>
                             </ion-col>
-                        </ion-row>
+                        <ion-rating [readOnly]="true" [numStars]="5" [value]="serv.globalrate/2"></ion-rating>
+                </ion-row> -->
 
                     </ion-col>
 

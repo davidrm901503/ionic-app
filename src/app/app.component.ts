@@ -21,6 +21,7 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       statusBar.overlaysWebView(false);
+      // statusBar.backgroundColorByHexString('#ffffff');
       // setTimeout(function(){
         // splashScreen.hide();
       // }, 5000);

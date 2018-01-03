@@ -7,19 +7,21 @@ import { AuthProvider } from "../../providers/auth/auth";
 import { GaleriaPage } from "../galeria/galeria";
 import { ComentariosPage } from "../comentarios/comentarios";
 import { Service } from '../../models/service';
+import { ServUpInfoComponent } from '../../components/serv-up-info/serv-up-info';
 
 @IonicPage()
 @Component({
   selector: 'page-service',
   templateUrl: 'service.html',
+  // entryComponents:[ ServUpInfoComponent]
 })
 export class ServicePage {
   response: Object;
   private service: Service;
-  private passedService: Service;
-
+  passedService: Service;
   cant_c :number;
   loggedIn: boolean;
+
   constructor(public navParams: NavParams,
     // private callNumber: CallNumber,
     public servPro: ServiceProvider,
@@ -41,9 +43,6 @@ export class ServicePage {
 
   ionViewDidLoad() {
     this.loggedIn = this.auth.isLoggedIn();
-
-
-
   }
   ionViewDidEnter() {
 
