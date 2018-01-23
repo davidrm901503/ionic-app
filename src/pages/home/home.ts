@@ -44,7 +44,6 @@ export class HomePage {
 
   busqueda:boolean;
   loading: any;
-
   @ViewChild('search') search;
 
 
@@ -170,11 +169,19 @@ export class HomePage {
     this.busqueda = false;
     this.noFound =  false;
   }
-  openServicePage(id,serv){
-    this.navCtrl.push(ServicePage,{
-       serviceId:id,
-       service:serv
-    })
+  // openServicePage(id,serv){
+  //   this.navCtrl.push(ServicePage,{
+  //      serviceId:id,
+  //      service:serv
+  //   })
+  // }
+  openServicePage(id,index) {
+    this.navCtrl.push(ServicePage, {
+      service: this.services[index], //paso el service
+      serviceId: id,  //si paso el id del servicio para la peticion
+      parentPage: this
+
+    });
   }
 
   onInput(e){

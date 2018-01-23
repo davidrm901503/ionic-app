@@ -1,6 +1,5 @@
 import {Component, ViewChild, ElementRef} from '@angular/core';
 import {
-  Platform,
   IonicPage,
   NavParams
 } from "ionic-angular";
@@ -18,15 +17,15 @@ declare var google;
 })
 export class MapaPage {
   wacthed: any;
+  watch:any;
+  latLng: any;
+  currentP: any;
   havePosition: boolean;
   destinos: any[];
-  watch:any;
   zoom:any =15;
-  currentP: any;
   cant_c: any;
   positions: Position[] = [];
   infowindow = new google.maps.InfoWindow;
-  latLng: any;
   directionsService = new google.maps.DirectionsService;
   directionsDisplay = new google.maps.DirectionsRenderer;
   distanceM = new google.maps.DistanceMatrixService();
@@ -36,17 +35,12 @@ export class MapaPage {
   private service: any = {};
   loggedIn: boolean;
 
-  constructor(  private platform: Platform,
-
-              public navParams: NavParams,
-
+  constructor( public navParams: NavParams,
               private geolocation: Geolocation,public events: Events) {
-
-    platform.ready().then(() => {
-
-    });
   }
-
+  ionViewDidEnter(){
+    this.getLocation();
+  }
   ionViewDidLoad() {
     this.wacthed=false;
     this.service = this.navParams.get("service");
@@ -67,7 +61,7 @@ export class MapaPage {
       if(status == "OK"){
 
         for (let i = 0; i < response.rows[0].elements.length; i++) {
-          var el = document.getElementById('pos'+i);
+          const el = document.getElementById('pos' + i);
           el.innerHTML = ":"+response.rows[0].elements[i].distance.text;
         }
 
@@ -80,7 +74,7 @@ export class MapaPage {
   // mostrar ruta entre 2 puntos
   calculateAndDisplayRoute(p) {
     this.destino=p;
-    var end = new google.maps.LatLng(p.latitude, p.longitude);
+    const end = new google.maps.LatLng(p.latitude, p.longitude);
     this.directionsService.route({
       origin: this.latLng,
       destination: end,
@@ -90,11 +84,11 @@ export class MapaPage {
         this.directionsDisplay.setMap(this.map);
         this.directionsDisplay.setDirections(response);
         if (!this.wacthed) {
-          console.log("this.wacthed");
           this.watch = this.geolocation.watchPosition({maximumAge :60000,timeout:60000})
           .filter((p) => p.coords !== undefined)
           .subscribe(position => {
               this.wacthed=true;
+              console.log("CAMBIO");
                let newPosition = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
                if(!this.latLng.equals( newPosition ))
                {
@@ -123,7 +117,6 @@ export class MapaPage {
 
   loadMap() {
     let mapOptions = {
-      // center: this.latLng,
       center: new google.maps.LatLng(23.13302, -82.38304),
       disableDefaultUI: true,
       zoom: 15,

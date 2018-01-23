@@ -25,9 +25,7 @@ export class ServUpInfoComponent{
     public modalCtrl: ModalController,
     private photoViewer: PhotoViewer,private platform: Platform) {  }
 
-  // ngOnInit() {
-  //   this.loggedIn = this.auth.isLoggedIn();
-  // }
+
   ngAfterViewInit(){
     this.loggedIn = this.auth.isLoggedIn();
   }

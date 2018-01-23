@@ -18,17 +18,17 @@
             <p>1.5km de tu posición</p>
 
         </ion-col>
-        <ion-col col-3 float-start>
-            <ion-label class="fs-20" color="azul-claro">
+        <ion-col col-3 >
+            <ion-label style="overflow: visible;margin: 0;" class="fs-25" color="azul-claro">
                 {{passedService.globalrate}}
                 <ion-icon color="favorite_on" name="star"></ion-icon>
             </ion-label>
-            <button class="fs-10" *ngIf=loggedIn (click)="openRate(passedService.id,passedService.rated,passedService)" color="azul-claro" ion-button>
+            <button style="margin-left: -5px;" class="fs-10" *ngIf=loggedIn (click)="openRate(passedService.id,passedService.rated,passedService)" color="azul-claro" ion-button>
             Evaluar
             </button>
             <hr class="hr-separador">
             <strong>
-              <ion-label class="fs-20"   color="azul-claro">
+              <ion-label class="fs-20" style="margin: 0;"   color="azul-claro">
                   <ion-icon name="chatboxes" ></ion-icon> {{cantComentarios}}
               </ion-label>
             </strong>

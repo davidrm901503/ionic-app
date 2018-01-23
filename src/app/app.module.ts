@@ -26,6 +26,8 @@ import { GaleriaPage } from "../pages/galeria/galeria";
 import { ComentariosPage } from "../pages/comentarios/comentarios";
 import { Create1Page } from "../pages/create1/create1";
 import { Create2Page } from "../pages/create2/create2";
+import {  TabPage} from "../pages/tab/tab";
+import {  TabMapaPage} from "../pages/tab-mapa/tab-mapa";
 
 
 // Componentes
@@ -41,7 +43,7 @@ import { AuthProvider } from '../providers/auth/auth';
 import { ApiProvider } from '../providers/api/api';
 
 // native
-
+import { Keyboard } from '@ionic-native/keyboard';
 import { File } from '@ionic-native/file';
 import { Camera } from '@ionic-native/camera';
 import { CallNumber } from "@ionic-native/call-number";
@@ -50,10 +52,15 @@ import { PhotoViewer } from '@ionic-native/photo-viewer';
 import { Create3Page } from '../pages/create3/create3';
 import { Create4Page } from '../pages/create4/create4';
 import { PagarPage } from '../pages/pagar/pagar';
+import { FiltroModalPage } from '../pages/filtro-modal/filtro-modal';
+import { ModalDenunciaPage } from '../pages/modal-denuncia/modal-denuncia';
+import { ChangePassPage } from '../pages/change-pass/change-pass';
+
 
 @NgModule({
   declarations: [
     MyApp,
+    TabPage,
     HomePage,
     PopoverPage,
     CategoriesPage,
@@ -64,6 +71,7 @@ import { PagarPage } from '../pages/pagar/pagar';
     ServicesPage,
     // LoginPage,
     // SignupPage,
+    FiltroModalPage,
     FavoritesPage,
     BusquedaPage,
     MyservicesPage,
@@ -77,7 +85,10 @@ import { PagarPage } from '../pages/pagar/pagar';
     Create2Page,
     Create3Page,
     Create4Page,
-    PagarPage
+    PagarPage,
+    TabMapaPage,
+    ModalDenunciaPage,
+    ChangePassPage
 
   ],
   imports: [
@@ -88,11 +99,14 @@ import { PagarPage } from '../pages/pagar/pagar';
       scrollPadding: false,
       scrollAssist: true, //estaba true
       // autoFocusAssist: false
+      // Tabs config
+      tabsHideOnSubPages: true,
     })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
+    TabPage,
     HomePage,
     PopoverPage,
     CategoriesPage,
@@ -101,8 +115,9 @@ import { PagarPage } from '../pages/pagar/pagar';
     IonRating,
     ServUpInfoComponent,
     ServicesPage,
+    FiltroModalPage,
     // LoginPage,
-    // SignupPage,z
+    // SignupPage,
     FavoritesPage,
     BusquedaPage,
     MyservicesPage,
@@ -116,7 +131,10 @@ import { PagarPage } from '../pages/pagar/pagar';
     Create2Page,
     Create3Page,
     Create4Page,
-    PagarPage
+    PagarPage,
+    TabMapaPage,
+    ModalDenunciaPage,
+    ChangePassPage
 
   ],
   providers: [
@@ -126,6 +144,7 @@ import { PagarPage } from '../pages/pagar/pagar';
     File,
     Camera,
     CallNumber,
+    Keyboard,
     Geolocation,
     PhotoViewer,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
@@ -134,6 +153,7 @@ import { PagarPage } from '../pages/pagar/pagar';
     ServiceProvider,
     AuthProvider,
     ApiProvider
+
     ]
 })
 export class AppModule {}

@@ -60,6 +60,7 @@ export class Create1Page {
        console.log(err);
       }
     );
+
     this.api.getCategories().then(
       data => {
         this.categories = data["data"];
