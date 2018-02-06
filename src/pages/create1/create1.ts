@@ -19,6 +19,7 @@ import { sendService } from '../../models/sendService';
 import { PhotoViewer } from '@ionic-native/photo-viewer';
 import { ServicesPage } from '../services/services';
 import { MyservicesPage } from '../myservices/myservices';
+import {SubCategoryProvider} from "../../providers/sub-category/sub-category";
 
 
 @IonicPage()
@@ -32,9 +33,13 @@ export class Create1Page {
   preview:any;
   service: sendService;
   cities: City[];
-  categories:SubCategory[];
+  categories:any[];
+  allCities:boolean;
+  public CValue:String;
+  private subCategories: any;
 
-  constructor(public navParams: NavParams,public navCtrl: NavController,
+
+  constructor( public subCat: SubCategoryProvider,public navParams: NavParams,public navCtrl: NavController,
     private camera: Camera,
     public actionSheetCtrl: ActionSheetController ,
     public api: ApiProvider,
@@ -42,6 +47,30 @@ export class Create1Page {
       ) {
         this.service = new sendService();
         this.loadSelect();
+
+  }
+  onChangeCountry(CValue) {
+    this.subCat.getsubcategories(CValue)
+      .then(
+        (subCat) => {
+          this.subCategories = subCat['data'];
+        }
+      ).catch(
+      (error) => {
+      }
+    );
+  }
+  allClickedCities() {
+    if (this.allCities){
+      this.service.cities = [];
+      for (var i = 0; i < this.cities.length; i++) {
+        this.service.cities.push(this.cities[i].id)
+      }
+    }
+    else {
+      this.service.cities = [];
+    }
+
   }
   backToHome(){
     if (this.edit) {
@@ -51,6 +80,7 @@ export class Create1Page {
     }
 
   }
+
   loadSelect() {
     this.api.getCities().then(
       data => {
@@ -61,7 +91,7 @@ export class Create1Page {
       }
     );
 
-    this.api.getCategories().then(
+    this.api.allCategories().then(
       data => {
         this.categories = data["data"];
       },
@@ -122,7 +152,7 @@ export class Create1Page {
       quality: 100,
       destinationType: this.camera.DestinationType.DATA_URL,
       sourceType: source
-    }
+    };
 
     this.camera.getPicture(options).then((imageData) => {
        this.preview = 'data:image/jpeg;base64,' + imageData;
@@ -137,11 +167,11 @@ export class Create1Page {
     });
   }
   goToCreate2(){
-    if (this.f.form.valid) {
+    // if (this.f.form.valid) {
       this.navCtrl.push(Create2Page, {
         service: this.service, //paso el service
       });
-    }
+    // }
 
   }
 }

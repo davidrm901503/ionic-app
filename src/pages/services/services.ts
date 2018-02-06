@@ -115,7 +115,7 @@ export class ServicesPage {
         }
       }
     );
-    this.api.getCategories().then(
+    this.api.getAllSubCategories().then(
       data => {
         this.categories = data["data"];
       },
@@ -192,7 +192,7 @@ export class ServicesPage {
     this.filtro=false;
     this.filter_city =[];
     this.filter_category =[];
-    this.filter_distance = 0;
+    this.filter_distance = 5;
     this.services =this.servTemp;
   }
 

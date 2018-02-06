@@ -18,19 +18,16 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class FiltroModalPage {
   categories: any;
   cities: any;
-  filter_distance: number=1;
+  filter_distance: number;
   filter_category: any="";
   filter_city: any="";
 
   constructor( public api: ApiProvider,public viewCtrl: ViewController,public navCtrl: NavController, public navParams: NavParams) {
     this.loadSelect();
-    // this.filter_distance =navParams.get("filter_distance");
-    // this.filter_category =navParams.get("filter_category");
-    // this.filter_city =navParams.get("filter_city");
   }
 
   ionViewDidLoad() {
-    this.filter_distance = this.navParams.get("filter_distance");
+    this.filter_distance = 5;
     this.filter_category =this.navParams.get("filter_category");
     this.filter_city =this.navParams.get("filter_city");
   }
@@ -60,7 +57,7 @@ export class FiltroModalPage {
        console.log(err);
       }
     );
-    this.api.getCategories().then(
+    this.api.getAllSubCategories().then(
       data => {
         this.categories = data["data"];
       },

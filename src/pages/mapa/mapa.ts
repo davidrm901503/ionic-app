@@ -62,7 +62,7 @@ export class MapaPage {
 
         for (let i = 0; i < response.rows[0].elements.length; i++) {
           const el = document.getElementById('pos' + i);
-          el.innerHTML = ":"+response.rows[0].elements[i].distance.text;
+          el.innerHTML = ": "+response.rows[0].elements[i].distance.text;
         }
 
       } else {

@@ -3,6 +3,7 @@ import { IonicPage, NavController, LoadingController, Platform } from "ionic-ang
 import  {ServiceProvider} from  '../../providers/service/service.service';
 import { HttpErrorResponse } from "@angular/common/http";
 import { PhotoViewer } from '@ionic-native/photo-viewer';
+import {ServicePage} from "../service/service";
 
 @IonicPage()
 @Component({
@@ -23,6 +24,13 @@ export class BusquedaPage {
     private photoViewer: PhotoViewer,private platform: Platform) {
   }
 
+  openServicePage(id,index) {
+    this.navCtrl.push(ServicePage, {
+      service: this.services[index], //paso el service
+      serviceId: id,  //si paso el id del servicio para la peticion
+    });
+  }
+
   ionViewDidLoad() {
     let loading = this.load.create({
       content: "Cargando..."
@@ -37,7 +45,9 @@ export class BusquedaPage {
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
+          loading.dismiss();
         } else {
+          loading.dismiss();
         }
       });
   }
