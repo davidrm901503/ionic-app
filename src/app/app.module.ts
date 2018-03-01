@@ -28,6 +28,7 @@ import { Create1Page } from "../pages/create1/create1";
 import { Create2Page } from "../pages/create2/create2";
 import {  TabPage} from "../pages/tab/tab";
 import {  TabMapaPage} from "../pages/tab-mapa/tab-mapa";
+import {CondicionesPage} from "../pages/condiciones/condiciones";
 
 
 // Componentes
@@ -57,22 +58,23 @@ import { ModalDenunciaPage } from '../pages/modal-denuncia/modal-denuncia';
 import { ChangePassPage } from '../pages/change-pass/change-pass';
 import {ModalHorarioPage} from "../pages/modal-horario/modal-horario";
 import { SocialSharing } from '@ionic-native/social-sharing';
-
-
+import {SearchPage} from "../pages/search/search";
+import { OpenNativeSettings } from '@ionic-native/open-native-settings';
+import { Diagnostic } from '@ionic-native/diagnostic';
 @NgModule({
   declarations: [
     MyApp,
     TabPage,
     HomePage,
+    SearchPage,
     PopoverPage,
+    CondicionesPage,
     CategoriesPage,
     SubcategoriesPage,
     AppHeaderComponent,
     IonRating,
     ServUpInfoComponent,
     ServicesPage,
-    // LoginPage,
-    // SignupPage,
     FiltroModalPage,
     ModalHorarioPage,
     FavoritesPage,
@@ -112,6 +114,8 @@ import { SocialSharing } from '@ionic-native/social-sharing';
     TabPage,
     HomePage,
     PopoverPage,
+    SearchPage,
+    CondicionesPage,
     CategoriesPage,
     SubcategoriesPage,
     AppHeaderComponent,
@@ -149,6 +153,8 @@ import { SocialSharing } from '@ionic-native/social-sharing';
     Camera,
     CallNumber,
     Keyboard,
+    OpenNativeSettings,
+    Diagnostic,
     Geolocation,
     PhotoViewer,
     {provide: ErrorHandler, useClass: IonicErrorHandler},

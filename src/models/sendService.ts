@@ -9,12 +9,18 @@ export class sendGalery{
   value	:string;
 
 }
+export class getHorarios{
+  end_time: string;
+  start_time: string;
+  week_days: number[];
+}
 export class sendPositions{
   title: string;
   latitude: any;
   longitude: any;
 }
 export class sendService {
+  id?: number
   title	: string;
   subtitle: string;
   address: string;
@@ -34,5 +40,7 @@ export class sendService {
   // week_days:any;
   dropsImages: any[];
   imagesList	:Imagen[];
+  subcategoriesList: any[];
+  timesList: any[];
 }
 

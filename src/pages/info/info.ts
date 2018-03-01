@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavParams} from "ionic-angular";
+import {getHorarios} from "../../models/sendService";
 
 
 /**
@@ -17,36 +18,28 @@ import { IonicPage, NavParams} from "ionic-angular";
 export class InfoPage {
   private service: any = {};
   cant_c:any;
-	serviceDays: string="";
+	serviceDays:any;
+  timesList:getHorarios[] = [];
   days : object = {
-   0:"Lunes",
-   1:"Martes",
-   2:"Miercoles",
-   3:"Jueves",
-   4:"Viernes",
-   5:"Sabado",
-   6:"Domingo",
+   0:"Lun",
+   1:"Mar",
+   2:"Mie",
+   3:"Jue",
+   4:"Vie",
+   5:"Sab",
+   6:"Dom",
   };
 
   constructor(public navParams: NavParams) {
-
   }
 
   ionViewDidLoad() {
     this.service = this.navParams.get("service");
     this.cant_c = this.navParams.get("cant_c");
 
-    if (this.service['week_days']) {
-
-
-    let tempD=  this.service['week_days'].split(',');
-
-      for (var index = 0; index < tempD.length; index++) {
-        if( index > 0)
-        this.serviceDays += ", "+this.days[tempD[index]];
-        else
-          this.serviceDays += this.days[tempD[index]];
-      }
+    for (let element of this.service.timesList) {
+      let str_to_array = element.week_days.split(',');
+      this.timesList.push({start_time:element.start_time,end_time:element.end_time,week_days:str_to_array})
     }
   }
 
